@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
 
-import categories from '../data/categories.json'
-import products from '../data/products.json'
+import categoriesData from '../data/categories.json'
+import productsData from '../data/products.json'
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import RequestForm from '../components/RequestForm.jsx'
 import useSeo from '../hooks/useSeo.js'
 
+// Достаём массивы из объектов (сработает, даже если JSON когда-нибудь станет чистым массивом)
+const categories = Array.isArray(categoriesData) ? categoriesData : categoriesData.categories || []
+const products = Array.isArray(productsData) ? productsData : productsData.products || []
 /**
  * Хиты продаж подбираются из products.json фильтром по `featured: true`,
  * чтобы витрина собиралась из данных, а не из хардкода.
