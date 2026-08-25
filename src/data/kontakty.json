@@ -1,0 +1,23 @@
+{
+  "title": "Контакты",
+  "lead": "Свяжитесь с нами любым удобным способом — мы всегда рады помочь.",
+  "info": {
+    "company": "ООО «Сыто»",
+    "subtitle": "ЭКОферма Дмитрия Колистратова",
+    "address": "143144, Московская область, г. Руза, п. Колюбакино, ул. Советская, д. 65",
+    "phone": "+7 (903) 238-70-62",
+    "phoneHref": "tel:+79032387062",
+    "email": "dmitriikolistratov@mail.ru",
+    "emailHref": "mailto:dmitriikolistratov@mail.ru",
+    "hours": "Пн–Пт: 9:00–18:00, Сб–Вс: по договорённости",
+    "social": {
+      "telegram": "https://t.me/syto",
+      "whatsapp": "https://wa.me/79032387062",
+      "vk": "https://vk.com/syto"
+    }
+  },
+  "form": {
+    "submitLabel": "Связаться с нами",
+    "successMessage": "Спасибо за обращение! Мы свяжемся с вами в ближайшее время."
+  }
+}

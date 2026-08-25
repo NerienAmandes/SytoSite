@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Закрыть служебные и неиндексируемые разделы (если появятся)
+Disallow: /order/
+
+# Ссылка на карту сайта
+Sitemap: https://syto.ru/sitemap.xml
