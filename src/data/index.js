@@ -17,10 +17,10 @@ export const faq = Array.isArray(faqJson)
 
 // --- Плейсхолдеры: эмодзи + цветовая плашка по слагу категории ---
 const CATEGORY_STYLES = {
-    napitki:           { glyph: '🍯', tint: '#F0D899', label: 'Напиток' },
-    myod:              { glyph: '🍯', tint: '#E8B23A', label: 'Мёд' },
+    napitki: { glyph: '🍯', tint: '#F0D899', label: 'Напиток' },
+    myod: { glyph: '🍯', tint: '#E8B23A', label: 'Мёд' },
     'myasnye-delikatesy': { glyph: '🍖', tint: '#C76B6B', label: 'Деликатес' },
-    gidrolaty:         { glyph: '🌿', tint: '#A8C97A', label: 'Гидролат' },
+    gidrolaty: { glyph: '🌿', tint: '#A8C97A', label: 'Гидролат' },
 }
 
 export function categoryStyle(slug) {
@@ -64,5 +64,27 @@ export function searchProducts(query, limit) {
             .join(' | ')
         return haystack.includes(q)
     })
-    return typeof limit === 'number' ? matches.slice(0, limit) : matches
+    return typeof limit === 'number' ? matches.slice(0, limit) : []
+}
+
+// --- Размеры изображений (для width/height в <img> чтобы не было сдвига макета) ---
+// Ключ — имя файла без расширения. Актуальные значения берутся из
+// scripts/inspect-webp.mjs. Если файла нет в мапе — вернётся null и браузер
+// пропустит атрибут (полагаемся на aspect-ratio в CSS как подстраховку).
+const IMAGE_DIMS = {
+    siten: { w: 622, h: 624 },
+    'СЫТА': { w: 1200, h: 960 },
+    nalivka: { w: 612, h: 604 },
+    uksus: { w: 1024, h: 768 },
+    rose: { w: 622, h: 614 },
+    krapiva: { w: 620, h: 616 },
+    siren: { w: 620, h: 620 },
+    ivanchai: { w: 620, h: 622 },
+}
+
+export function imageDims(imagePath) {
+    if (!imagePath) return null
+    // /images/СЫТА.webp → СЫТА
+    const base = imagePath.split('/').pop().replace(/\.[^.]+$/, '')
+    return IMAGE_DIMS[base] || null
 }

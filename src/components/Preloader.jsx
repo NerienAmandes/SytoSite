@@ -41,37 +41,6 @@ export default function Preloader() {
     })
     .join(' ')
 
-  // Декоративная полоска из сотов под надписью «СЫТО» (3 соты + 2 половинки по бокам)
-  const cellSize = 18
-  const cellHeight = cellSize * Math.sqrt(3) // ≈ 31
-  const stripe = []
-  // 3 полных шестиугольника в ряд
-  for (let i = 0; i < 3; i++) {
-    const cx = i * (cellSize * 1.5)
-    const cy = cellHeight / 2
-    const points = [0, 60, 120, 180, 240, 300]
-      .map((a) => {
-        const ar = (a * Math.PI) / 180
-        return `${cx + cellSize * 0.5 * Math.cos(ar)},${cy + cellSize * 0.5 * Math.sin(ar)}`
-      })
-      .join(' ')
-    stripe.push({ points, key: `c${i}` })
-  }
-  // 2 половинки по краям
-  const halfPoints = (offsetX) => {
-    const cx = offsetX
-    const cy = cellHeight / 2
-    const r = cellSize * 0.5
-    return [60, 120, 180, 240, 300]
-      .map((a) => {
-        const ar = (a * Math.PI) / 180
-        return `${cx + r * Math.cos(ar)},${cy + r * Math.sin(ar)}`
-      })
-      .join(' ')
-  }
-  stripe.unshift({ points: halfPoints(-cellSize * 0.5), key: 'h0' })
-  stripe.push({ points: halfPoints(cellSize * 3 - cellSize * 0.5), key: 'h1' })
-
   return (
     <div className={`preloader preloader--${state}`} aria-hidden="true">
       <div className="preloader__seal">
@@ -111,25 +80,6 @@ export default function Preloader() {
         </svg>
       </div>
       <div className="preloader__title">СЫТО</div>
-
-      {/* Декоративная полоска из медовых сот под надписью */}
-      <div className="preloader__cells-stripe">
-        <svg
-          viewBox={`0 0 ${cellSize * 3} ${cellHeight}`}
-          xmlns="http://www.w3.org/2000/svg"
-          className="preloader__cells-svg"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          {stripe.map((cell) => (
-            <polygon
-              key={cell.key}
-              points={cell.points}
-              className="preloader__cell"
-            />
-          ))}
-        </svg>
-      </div>
-
       <div className="preloader__caption">ЭКОферма · медовая лавка</div>
     </div>
   )

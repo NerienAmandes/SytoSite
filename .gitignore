@@ -6,5 +6,6 @@ dist-ssr
 npm-debug.log*
 .vscode
 .idea
+.vercel
 .env
 .env.local

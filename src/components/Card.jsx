@@ -35,6 +35,8 @@ export default function Card({ product }) {
             src={product.image}
             alt={product.title}
             className="product-card__image"
+            loading="lazy"
+            decoding="async"
             style={product.imageSprite ? { objectPosition: product.imageSprite, objectFit: 'cover' } : {}}
           />
         </div>

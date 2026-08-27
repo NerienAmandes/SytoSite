@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-import { products, categories } from '../data/index.js'
+import { products, categories, imageDims } from '../data/index.js'
 import { formatPrice } from '../data/index.js'
 
 import Card from '../components/Card.jsx'
@@ -107,6 +107,10 @@ function ProductView({ product, category, related }) {
               src={product.image}
               alt={product.title}
               className="product__image"
+              loading="lazy"
+              decoding="async"
+              width={imageDims(product.image)?.w}
+              height={imageDims(product.image)?.h}
               style={product.imageSprite ? { objectPosition: product.imageSprite, objectFit: 'cover' } : {}}
             />
           ) : (
