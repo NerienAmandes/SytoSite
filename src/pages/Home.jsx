@@ -1,20 +1,19 @@
 import { Link } from 'react-router-dom'
 
-import categoriesData from '../data/categories.json'
-import productsData from '../data/products.json'
+import { categoryStyle, categories, products, faq } from '../data/index.js'
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import RequestForm from '../components/RequestForm.jsx'
+import Faq from '../components/Faq.jsx'
 import useSeo from '../hooks/useSeo.js'
 
-// Достаём массивы из объектов (сработает, даже если JSON когда-нибудь станет чистым массивом)
-const categories = Array.isArray(categoriesData) ? categoriesData : categoriesData.categories || []
-const products = Array.isArray(productsData) ? productsData : productsData.products || []
-/**
- * Хиты продаж подбираются из products.json фильтром по `featured: true`,
- * чтобы витрина собиралась из данных, а не из хардкода.
- */
+/* Хиты продаж подбираются из products.json фильтром по `featured: true`,
+   чтобы витрина собиралась из данных, а не из хардкода. */
 const hits = products.filter((p) => p.featured)
+
+/* На главной показываем первые 3 вопроса, остальные — на /faq */
+const HOME_FAQ_COUNT = 3
+const faqPreview = faq.slice(0, HOME_FAQ_COUNT)
 
 /* ===== Преимущества — контент-слой (можно вынести в CMS/JSON позже) ===== */
 const ADVANTAGES = [
@@ -53,6 +52,7 @@ export default function Home() {
       <CategoriesSection />
       <HitsSection hits={hits} />
       <AdvantagesSection />
+      {faqPreview.length > 0 && <FaqSection items={faqPreview} />}
       <ContactsSection />
     </>
   )
@@ -111,16 +111,29 @@ function CategoriesSection() {
         <h2 className="section__title">Каталог</h2>
         <Divider />
         <div className="cards-grid cards-grid--wide">
-          {categories.map((c) => (
-            <Card
-              key={c.slug}
-              variant="category"
-              to={`/catalog/${c.slug}`}
-              title={c.title}
-            >
-              {c.shortDescription}
-            </Card>
-          ))}
+          {categories.map((c) => {
+            const style = categoryStyle(c.slug)
+            return (
+              <Link
+                key={c.slug}
+                to={`/catalog/${c.slug}`}
+                className="card category-card"
+              >
+                <div
+                  className="category-card__media"
+                  style={{ backgroundColor: style.tint }}
+                  aria-hidden="true"
+                >
+                  <span className="category-card__glyph">{style.glyph}</span>
+                </div>
+                <h3 className="category-card__title">{c.title}</h3>
+                {c.shortDescription && (
+                  <p className="category-card__text">{c.shortDescription}</p>
+                )}
+                <span className="category-card__cta">Смотреть →</span>
+              </Link>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -130,24 +143,19 @@ function CategoriesSection() {
 /* ---------------------------- 4. Хиты ----------------------------- */
 
 function HitsSection({ hits }) {
+  if (!hits || hits.length === 0) return null
   return (
     <section className="section">
       <div className="container">
         <h2 className="section__title">Хиты продаж</h2>
         <Divider />
         <div className="cards-grid">
-          {hits.map((p) => {
-            const minPrice = Math.min(...p.variants.map((v) => v.price))
-            return (
-              <Card key={p.slug} to={`/product/${p.slug}`} title={p.title}>
-                <p className="card__text">{p.shortDescription}</p>
-                <div className="card__footer">
-                  <span className="card__price">от {minPrice} ₽</span>
-                  <span className="btn">Подробнее</span>
-                </div>
-              </Card>
-            )
-          })}
+          {hits.map((p) => (
+            <Card key={p.slug} product={p} />
+          ))}
+        </div>
+        <div className="page__actions">
+          <Link to="/catalog" className="btn btn--ghost">Весь каталог</Link>
         </div>
       </div>
     </section>
@@ -210,6 +218,25 @@ function ContactsSection() {
             submitLabel="Отправить заявку"
             successMessage="Спасибо! Мы свяжемся с вами в ближайшее время."
           />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ------------------ 7. Частые вопросы (превью) -------------------- */
+
+function FaqSection({ items }) {
+  return (
+    <section className="section">
+      <div className="container">
+        <h2 className="section__title">Частые вопросы</h2>
+        <Divider />
+        <Faq items={items} defaultOpenIndex={-1} />
+        <div className="page__actions">
+          <Link to="/faq" className="btn btn--ghost">
+            Все вопросы →
+          </Link>
         </div>
       </div>
     </section>

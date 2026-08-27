@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon (SVG, поддерживается всеми современными браузерами) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- SEO: базовые мета-теги. Конкретные title/description выставляются
+         хуком useSeo на каждой странице после гидратации React-приложения. -->
+    <meta name="description" content="ООО «Сыто» — ЭКОферма Дмитрия Колистратова. Натуральные напитки, мёд, мясные деликатесы." />
+    <meta name="theme-color" content="#F5F1E8" />
+
+    <!-- Open Graph (для красивых превью в соцсетях и мессенджерах) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Сыто — ЭКОферма" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="Сыто — ЭКОферма Дмитрия Колистратова" />
+    <meta property="og:description" content="Натуральные напитки, мёд, мясные деликатесы и гидролаты. Заповедник «Пустынские озёра», Нижегородская область." />
+    <meta property="og:image" content="/og-cover.jpg" />
+    <meta property="og:url" content="https://syto.ru/" />
+
+    <title>Сыто — ЭКОферма Дмитрия Колистратова</title>
+    <link rel="canonical" href="https://syto.ru/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Podkova:wght@400;500;600;700&family=Ruslan+Display&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

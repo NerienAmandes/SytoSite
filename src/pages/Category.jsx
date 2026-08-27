@@ -1,52 +1,72 @@
 import { useParams, Link } from 'react-router-dom'
 import { products, categories } from '../data/index.js'
 import Card from '../components/Card.jsx'
+import Divider from '../components/Divider.jsx'
+import Breadcrumbs from '../components/Breadcrumbs.jsx'
+import useSeo from '../hooks/useSeo.js'
 
 export default function Category() {
+  // Достаём slug из адреса: /catalog/napitki → "napitki"
   const { categorySlug } = useParams()
 
-  const category = categories.find(c => c.slug === categorySlug)
-  const categoryProducts = products.filter(p => p.category === categorySlug)
+  const category = categories.find((c) => c.slug === categorySlug)
+  const categoryProducts = products.filter((p) => p.category === categorySlug)
+
+  useSeo({
+    title: category ? category.title : 'Категория не найдена',
+    description: category
+      ? `${category.title} от ЭКОфермы «Сыто». ${category.shortDescription || ''} Натуральные продукты с доставкой по России.`
+      : 'Запрошенная категория не найдена в каталоге ЭКОфермы «Сыто».',
+  })
 
   if (!category) {
     return (
-      <div className="container" style={{ padding: '60px 20px', textAlign: 'center' }}>
-        <h1>Категория не найдена</h1>
-        <p style={{ marginTop: '16px', opacity: 0.7 }}>Похоже, такой страницы в нашей лавке нет.</p>
-        <Link to="/catalog" style={{ display: 'inline-block', marginTop: '24px', padding: '12px 24px', background: '#D49A36', color: '#2C241B', textDecoration: 'none', borderRadius: '4px', fontWeight: 600 }}>
-          Вернуться в каталог
-        </Link>
-      </div>
+      <main className="container">
+        <Breadcrumbs
+          items={[
+            { label: 'Главная', to: '/' },
+            { label: 'Каталог', to: '/catalog' },
+            { label: 'Не найдено' },
+          ]}
+        />
+        <h1 className="page__title">Категория не найдена</h1>
+        <Divider />
+        <p className="page__empty">
+          Похоже, такой страницы в нашей лавке нет.
+        </p>
+        <div className="page__actions">
+          <Link to="/catalog" className="btn">В каталог</Link>
+        </div>
+      </main>
     )
   }
 
   return (
-    <div className="container" style={{ padding: '40px 20px' }}>
-      <nav style={{ fontSize: '14px', opacity: 0.6, marginBottom: '16px' }}>
-        <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>Главная</Link>
-        {' / '}
-        <Link to="/catalog" style={{ color: 'inherit', textDecoration: 'none' }}>Каталог</Link>
-        {' / '}
-        <span>{category.title}</span>
-      </nav>
+    <main className="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Главная', to: '/' },
+          { label: 'Каталог', to: '/catalog' },
+          { label: category.title },
+        ]}
+      />
 
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '12px' }}>{category.title}</h1>
+      <h1 className="page__title">{category.title}</h1>
+      <Divider />
 
-      {category.description && (
-        <p style={{ fontSize: '1.1rem', opacity: 0.8, maxWidth: '700px', marginBottom: '40px' }}>
-          {category.description}
-        </p>
+      {category.shortDescription && (
+        <p className="page__intro">{category.shortDescription}</p>
       )}
 
       {categoryProducts.length === 0 ? (
-        <p style={{ opacity: 0.7 }}>В этой категории пока нет товаров.</p>
+        <p className="page__empty">В этой категории пока нет товаров.</p>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '28px' }}>
-          {categoryProducts.map(product => (
+        <div className="cards-grid">
+          {categoryProducts.map((product) => (
             <Card key={product.slug} product={product} />
           ))}
         </div>
       )}
-    </div>
+    </main>
   )
 }

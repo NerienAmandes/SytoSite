@@ -1,36 +1,63 @@
-import categories from '../data/categories.json'
-import Card from '../components/Card.jsx'
+import { Link } from 'react-router-dom'
+import { categories, categoryStyle } from '../data/index.js'
 import Divider from '../components/Divider.jsx'
+import Breadcrumbs from '../components/Breadcrumbs.jsx'
 import useSeo from '../hooks/useSeo.js'
 
 export default function Catalog() {
   useSeo({
     title: 'Каталог продукции',
     description:
-      'Каталог ЭКОфермы «Сыто»: натуральные медовые напитки, мёд и продукты пчеловодства, ' +
-      'мясные деликатесы собственного копчения, гидролаты. Доставка по России.',
+      'Дары заповедных лесов и лугов — мёд, травы и мясные деликатесы собственного производства ЭКОфермы «Сыто».',
   })
+
   return (
     <main className="container">
-      <h1 className="page__title">Каталог</h1>
+      <Breadcrumbs
+        items={[
+          { label: 'Главная', to: '/' },
+          { label: 'Каталог' },
+        ]}
+      />
+
+      <h1 className="page__title">Каталог продукции</h1>
       <Divider />
       <p className="page__intro">
-        Продукция ЭКОфермы «Сыто»: напитки, мёд и&nbsp;продукты пчеловодства,
-        мясные деликатесы и&nbsp;натуральные гидролаты.
+        Дары заповедных лесов и лугов — мёд, травы и мясные деликатесы
+        собственного производства.
       </p>
 
-      <div className="cards-grid cards-grid--wide">
-        {categories.map((c) => (
-          <Card
-            key={c.slug}
-            variant="category"
-            to={`/catalog/${c.slug}`}
-            title={c.title}
-          >
-            {c.shortDescription}
-          </Card>
-        ))}
-      </div>
+      {categories.length === 0 ? (
+        <p className="page__empty">Категории пока не добавлены.</p>
+      ) : (
+        <div className="cards-grid cards-grid--wide">
+          {categories.map((category) => {
+            const style = categoryStyle(category.slug)
+            return (
+              <Link
+                key={category.slug}
+                to={`/catalog/${category.slug}`}
+                className="card category-card"
+              >
+                <div
+                  className="category-card__media"
+                  style={{ backgroundColor: style.tint }}
+                  aria-hidden="true"
+                >
+                  <span className="category-card__glyph">{style.glyph}</span>
+                </div>
+                <h2 className="category-card__title">{category.title}</h2>
+                {category.shortDescription && (
+                  <p className="category-card__text">
+                    {category.shortDescription}
+                  </p>
+                )}
+                <span className="category-card__cta">Смотреть товары →</span>
+              </Link>
+            )
+          })}
+        </div>
+      )}
     </main>
   )
 }

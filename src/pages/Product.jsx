@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-import products from '../data/products.json'
-import categories from '../data/categories.json'
+import { products, categories } from '../data/index.js'
+import { formatPrice } from '../data/index.js'
 
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
@@ -19,7 +19,7 @@ export default function Product() {
   useSeo({
     title: product ? product.title : 'Товар не найден',
     description: product
-      ? `${product.title} от ЭКОфермы «Сыто». ${product.short || ''} Натуральные продукты с доставкой по России.`.slice(0, 200)
+      ? `${product.title} от ЭКОфермы «Сыто». ${product.shortDescription || ''} Натуральные продукты с доставкой по России.`.slice(0, 200)
       : 'Запрошенный товар не найден в каталоге ЭКОфермы «Сыто».',
   })
 
@@ -53,6 +53,19 @@ export default function Product() {
       (p) => p.category === product.category && p.slug !== product.slug
     )
     .slice(0, RELATED_COUNT)
+    .sort((a, b) => {
+      // Сортировка для гидролатов, чтобы они всегда шли в одном порядке
+      if (a.category === 'gidrolaty' && b.category === 'gidrolaty') {
+        const order = [
+          'gidro-lat-belaya-roza',
+          'gidro-lat-krapiva',
+          'gidro-lat-ivan-chay',
+          'gidro-lat-siren'
+        ];
+        return order.indexOf(a.slug) - order.indexOf(b.slug);
+      }
+      return 0;
+    });
 
   return (
     <ProductView
@@ -94,6 +107,7 @@ function ProductView({ product, category, related }) {
               src={product.image}
               alt={product.title}
               className="product__image"
+              style={product.imageSprite ? { objectPosition: product.imageSprite, objectFit: 'cover' } : {}}
             />
           ) : (
             <div className="product__image-placeholder" aria-hidden="true">
@@ -135,7 +149,7 @@ function ProductView({ product, category, related }) {
                         {v.label}
                       </span>
                       <span className="product__variant-price">
-                        {v.price}&nbsp;₽
+                        {formatPrice(v.price)}&nbsp;₽
                       </span>
                     </button>
                   )
@@ -147,7 +161,7 @@ function ProductView({ product, category, related }) {
           <div className="product__buy">
             <div className="product__price">
               <span className="product__price-value">
-                {currentVariant.price}
+                {formatPrice(currentVariant.price)}
               </span>
               <span className="product__price-currency">₽</span>
               {currentVariant.label && (
@@ -180,22 +194,9 @@ function ProductView({ product, category, related }) {
           <h2 className="section__title">Похожие товары</h2>
           <Divider />
           <div className="cards-grid">
-            {related.map((p) => {
-              const minPrice = Math.min(...p.variants.map((v) => v.price))
-              return (
-                <Card
-                  key={p.slug}
-                  to={`/product/${p.slug}`}
-                  title={p.title}
-                >
-                  <p className="card__text">{p.shortDescription}</p>
-                  <div className="card__footer">
-                    <span className="card__price">от {minPrice} ₽</span>
-                    <span className="btn">Подробнее</span>
-                  </div>
-                </Card>
-              )
-            })}
+            {related.map((p) => (
+              <Card key={p.slug} product={p} />
+            ))}
           </div>
         </section>
       )}

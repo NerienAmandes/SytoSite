@@ -1,5 +1,6 @@
 import productsJson from './products.json'
 import categoriesJson from './categories.json'
+import faqJson from './faq.json'
 
 // Защищаемся: работает и с массивом, и с объектом { products: [...] }
 export const products = Array.isArray(productsJson)
@@ -9,3 +10,59 @@ export const products = Array.isArray(productsJson)
 export const categories = Array.isArray(categoriesJson)
     ? categoriesJson
     : categoriesJson.categories || []
+
+export const faq = Array.isArray(faqJson)
+    ? faqJson
+    : faqJson.items || []
+
+// --- Плейсхолдеры: эмодзи + цветовая плашка по слагу категории ---
+const CATEGORY_STYLES = {
+    napitki:           { glyph: '🍯', tint: '#F0D899', label: 'Напиток' },
+    myod:              { glyph: '🍯', tint: '#E8B23A', label: 'Мёд' },
+    'myasnye-delikatesy': { glyph: '🍖', tint: '#C76B6B', label: 'Деликатес' },
+    gidrolaty:         { glyph: '🌿', tint: '#A8C97A', label: 'Гидролат' },
+}
+
+export function categoryStyle(slug) {
+    return CATEGORY_STYLES[slug] || { glyph: '✦', tint: '#D49A36', label: '' }
+}
+
+// --- Цена: минимальная из вариантов, форматированная строкой ---
+export function minPriceOf(product) {
+    const prices = (product?.variants || [])
+        .map((v) => Number(v.price))
+        .filter((n) => Number.isFinite(n))
+    return prices.length ? Math.min(...prices) : null
+}
+
+export function formatPrice(n) {
+    if (n == null) return ''
+    // 1500 -> "1 500", чтобы читалось по-купечески
+    return n.toLocaleString('ru-RU')
+}
+
+// --- Поиск по товарам: title, tags, shortDescription, description ---
+// Нормализуем строку (lowercase, без ё/е разницы) и проверяем вхождение подстроки
+function normalize(s) {
+    return (s || '')
+        .toString()
+        .toLowerCase()
+        .replace(/ё/g, 'е')
+}
+
+export function searchProducts(query, limit) {
+    const q = normalize(query).trim()
+    if (!q) return []
+    const matches = products.filter((p) => {
+        const haystack = [
+            p.title,
+            p.shortDescription,
+            p.description,
+            ...(p.tags || []),
+        ]
+            .map(normalize)
+            .join(' | ')
+        return haystack.includes(q)
+    })
+    return typeof limit === 'number' ? matches.slice(0, limit) : matches
+}

@@ -5,16 +5,16 @@ import Divider from '../components/Divider.jsx'
 import useSeo from '../hooks/useSeo.js'
 
 /**
- * Страница /syto — «О напитке», «Рецептура», «Свойства», «Технология».
- * Вся текстовая часть берётся из src/data/syto.json, чтобы редактировать
- * контент без правки компонента.
+ * Страница /syto — витрина напитка «Сыто».
+ * Секции: О напитке, Рецептура, Свойства, Технология, Преимущества, О компании, Грант.
+ * Контент целиком живёт в src/data/syto.json.
  */
 export default function Syto() {
   useSeo({
     title: 'Напиток «Сыто» — рецепт Древней Руси',
     description:
-      '«Сыто» — исконно русский медово-травяной напиток на мёде и лечебных травах. ' +
-      'Рецептура, 9 полезных свойств и технология приготовления. Без алкоголя и консервантов.',
+      '«Сыто» — биопродукт собственного производства на мёде, лечебных травах и родниковой воде. ' +
+      'Рецептура, 9 полезных свойств, вакуумная технология. Без консервантов и красителей.',
   })
   return (
     <>
@@ -23,6 +23,10 @@ export default function Syto() {
       <RecepturaSection data={data.receptura} />
       <SvoystvaSection data={data.svoystva} />
       <TehnologiyaSection data={data.tehnologiya} />
+      <AdvantagesSection data={data.advantages} />
+      <CompanySection data={data.company} />
+      <GrantSection data={data.grant} />
+      <FinalCta />
     </>
   )
 }
@@ -51,9 +55,7 @@ function AboutSection({ data }) {
         <Divider />
         <div className="syto-about">
           {data.paragraphs.map((p, i) => (
-            <p key={i} className="syto-about__p">
-              {p}
-            </p>
+            <p key={i} className="syto-about__p">{p}</p>
           ))}
         </div>
       </div>
@@ -72,6 +74,9 @@ function RecepturaSection({ data }) {
         <div className="receptura__grid">
           {data.items.map((item, i) => (
             <div key={i} className="receptura__card">
+              <span className="receptura__glyph" aria-hidden="true">
+                {item.glyph}
+              </span>
               <h3 className="receptura__title">{item.title}</h3>
               <p className="receptura__text">{item.text}</p>
             </div>
@@ -93,7 +98,10 @@ function SvoystvaSection({ data }) {
         <ol className="svoystva__list">
           {data.items.map((item, i) => (
             <li key={i} className="svoystva__item">
-              {item}
+              <span className="svoystva__glyph" aria-hidden="true">
+                {item.glyph}
+              </span>
+              <span className="svoystva__text">{item.text}</span>
             </li>
           ))}
         </ol>
@@ -122,10 +130,89 @@ function TehnologiyaSection({ data }) {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  )
+}
 
+/* ----------------------------- Преимущества ----------------------------- */
+
+function AdvantagesSection({ data }) {
+  if (!data?.items?.length) return null
+  return (
+    <section className="section">
+      <div className="container">
+        <h2 className="section__title">{data.title}</h2>
+        <Divider />
+        <div className="syto-advantages__grid">
+          {data.items.map((item, i) => (
+            <div key={i} className="syto-advantage">
+              <span className="syto-advantage__glyph" aria-hidden="true">
+                {item.glyph}
+              </span>
+              <h3 className="syto-advantage__title">{item.title}</h3>
+              <p className="syto-advantage__text">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ------------------------------ О компании ------------------------------ */
+
+function CompanySection({ data }) {
+  if (!data) return null
+  return (
+    <section className="section">
+      <div className="container">
+        <h2 className="section__title">{data.title}</h2>
+        <Divider />
+        <p className="syto-company__lead">{data.lead}</p>
+
+        {data.csi && (
+          <div className="syto-csi">
+            <div className="syto-csi__value">{data.csi.value}</div>
+            <div className="syto-csi__label">{data.csi.label}</div>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+/* -------------------------------- Грант --------------------------------- */
+
+function GrantSection({ data }) {
+  if (!data) return null
+  return (
+    <section className="section">
+      <div className="container">
+        <div className="syto-grant">
+          <span className="syto-grant__seal" aria-hidden="true">✦</span>
+          <div className="syto-grant__body">
+            <h2 className="syto-grant__title">{data.title}</h2>
+            <p className="syto-grant__text">{data.text}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ---------------------------- Финальный CTA ----------------------------- */
+
+function FinalCta() {
+  return (
+    <section className="section">
+      <div className="container">
         <div className="page__actions">
           <Link to="/product/syto-bezalkogolnyy" className="btn">
             Попробовать «Сыто»
+          </Link>
+          <Link to="/catalog" className="btn btn--ghost" style={{ marginLeft: '0.75rem' }}>
+            В каталог
           </Link>
         </div>
       </div>
