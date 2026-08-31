@@ -80,6 +80,14 @@ const IMAGE_DIMS = {
     krapiva: { w: 620, h: 616 },
     siren: { w: 620, h: 620 },
     ivanchai: { w: 620, h: 622 },
+    ytka: { w: 1200, h: 801 },
+    indeika: { w: 1200, h: 800 },
+    indeikabedro: { w: 1200, h: 900 },
+    balik: { w: 1200, h: 900 },
+    kapokollo: { w: 1200, h: 675 },
+    pancetta: { w: 1122, h: 1402 },
+    baranina: { w: 1200, h: 960 },
+    kolbasa: { w: 1128, h: 1394 },
 }
 
 export function imageDims(imagePath) {

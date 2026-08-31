@@ -8,6 +8,7 @@ import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
 import OrderModal from '../components/OrderModal.jsx'
+import ImageZoom from '../components/ImageZoom.jsx'
 import useSeo from '../hooks/useSeo.js'
 
 const RELATED_COUNT = 4
@@ -79,6 +80,7 @@ export default function Product() {
 function ProductView({ product, category, related }) {
   const [selectedVariant, setSelectedVariant] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isZoomOpen, setIsZoomOpen] = useState(false)
 
   const currentVariant = product.variants[selectedVariant] || product.variants[0]
 
@@ -112,6 +114,15 @@ function ProductView({ product, category, related }) {
               width={imageDims(product.image)?.w}
               height={imageDims(product.image)?.h}
               style={product.imageSprite ? { objectPosition: product.imageSprite, objectFit: 'cover' } : {}}
+              onClick={() => setIsZoomOpen(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setIsZoomOpen(true)
+                }
+              }}
             />
           ) : (
             <div className="product__image-placeholder" aria-hidden="true">
@@ -210,6 +221,13 @@ function ProductView({ product, category, related }) {
         onClose={() => setIsModalOpen(false)}
         productTitle={product.title}
         variantLabel={currentVariant.label}
+      />
+
+      <ImageZoom
+        isOpen={isZoomOpen}
+        onClose={() => setIsZoomOpen(false)}
+        src={product.image}
+        alt={product.title}
       />
     </main>
   )

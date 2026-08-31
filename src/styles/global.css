@@ -1689,9 +1689,19 @@ a.card:hover {
 
 .product__image {
   width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   display: block;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
+  background: var(--color-bg-soft);
+  cursor: zoom-in;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.product__image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(44, 36, 27, 0.18);
 }
 
 .product__image-placeholder {
@@ -1946,6 +1956,69 @@ a.card:hover {
 }
 
 .modal .form { padding: 0; background: transparent; border: none; }
+
+/* ===== Лайтбокс (просмотр картинки) ===== */
+.zoom {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(28, 22, 14, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 2rem;
+  cursor: zoom-out;
+  animation: zoom-fade 0.22s ease;
+}
+
+@keyframes zoom-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes zoom-pop {
+  from { transform: scale(0.94); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.zoom__image {
+  display: block;
+  max-width: min(1200px, 100%);
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  animation: zoom-pop 0.28s ease;
+}
+
+.zoom__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.zoom__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.zoom__close:focus-visible {
+  outline: 2px solid var(--color-honey);
+  outline-offset: 2px;
+}
 
 /* ============================================
    Общая форма заявки (RequestForm)
