@@ -88,6 +88,23 @@ const IMAGE_DIMS = {
     pancetta: { w: 1122, h: 1402 },
     baranina: { w: 1200, h: 960 },
     kolbasa: { w: 1128, h: 1394 },
+    grydinka: { w: 1200, h: 960 },
+    okorok: { w: 1122, h: 1402 },
+    sessina: { w: 1023, h: 1537 },
+    sheiasvinaya: { w: 1200, h: 1200 },
+    goviadinamedovaya: { w: 1200, h: 800 },
+    gus: { w: 1200, h: 900 },
+    karpaccokura: { w: 1122, h: 1402 },
+    kyrochka: { w: 1086, h: 1448 },
+    olen: { w: 1122, h: 1402 },
+    pryaniiposol: { w: 1122, h: 1402 },
+    salo: { w: 1200, h: 900 },
+    salobochka: { w: 1122, h: 1402 },
+    salovengerski: { w: 1086, h: 1448 },
+    ytkakarpacco: { w: 1122, h: 1402 },
+    'syto-napintki': { w: 1200, h: 669 },
+    myaso: { w: 1200, h: 800 },
+    hydro: { w: 1200, h: 800 },
 }
 
 export function imageDims(imagePath) {

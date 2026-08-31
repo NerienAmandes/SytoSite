@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { categoryStyle, categories, products, faq } from '../data/index.js'
+import { categoryStyle, categories, products, faq, imageDims } from '../data/index.js'
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import RequestForm from '../components/RequestForm.jsx'
@@ -121,10 +121,22 @@ function CategoriesSection() {
               >
                 <div
                   className="category-card__media"
-                  style={{ backgroundColor: style.tint }}
+                  style={c.image ? { backgroundColor: style.tint, padding: 0 } : { backgroundColor: style.tint }}
                   aria-hidden="true"
                 >
-                  <span className="category-card__glyph">{style.glyph}</span>
+                  {c.image ? (
+                    <img
+                      src={c.image}
+                      alt=""
+                      className="category-card__image"
+                      loading="lazy"
+                      decoding="async"
+                      width={imageDims(c.image)?.w}
+                      height={imageDims(c.image)?.h}
+                    />
+                  ) : (
+                    <span className="category-card__glyph">{style.glyph}</span>
+                  )}
                 </div>
                 <h3 className="category-card__title">{c.title}</h3>
                 {c.shortDescription && (

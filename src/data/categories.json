@@ -5,14 +5,16 @@
             "slug": "napitki",
             "title": "Напитки",
             "shortDescription": "Медово-травяные напитки, квасы, узвары, настойки, пиво и чаи от ЭКОфермы «Сыто».",
-            "accent": "grass"
+            "accent": "grass",
+            "image": "/images/syto-napintki.webp"
         },
         {
             "id": "myasnye-delikatesy",
             "slug": "myasnye-delikatesy",
             "title": "Мясные деликатесы",
             "shortDescription": "Копчение, сыровяление, домашняя колбаса — мясо натурального копчения и длительной выдержки.",
-            "accent": "berry"
+            "accent": "berry",
+            "image": "/images/myaso.webp"
         },
         {
             "id": "myod",
@@ -26,7 +28,8 @@
             "slug": "gidrolaty",
             "title": "Натуральные гидролаты",
             "shortDescription": "100% натуральные гидролаты для ухода за кожей и волосами: роза, крапива, сирень, иван-чай.",
-            "accent": "grass"
+            "accent": "grass",
+            "image": "/images/hydro.webp"
         }
     ]
 }
