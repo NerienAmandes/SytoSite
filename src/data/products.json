@@ -207,11 +207,7 @@
       "shortDescription": "Традиционный безалкогольный напиток из райских яблочек и красной черёмухи.",
       "description": "Узвар — традиционный славянский безалкогольный напиток. Приготовлен из райских яблочек и красной черёмухи без добавления сахара. Обладает насыщенным ягодным вкусом и приятным ароматом.",
       "image": "/images/uzvarnoldvapuat.webp",
-      "gallery": [
-        "/images/uzvarnoldvapuat.webp",
-        "/images/uzvarnolpuat.webp",
-        "/images/uzvarnolsemdpuat.webp"
-      ],
+      "gallery": [],
       "available": true,
       "tags": [
         "напиток",

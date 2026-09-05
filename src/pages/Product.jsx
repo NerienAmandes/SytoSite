@@ -70,6 +70,7 @@ export default function Product() {
 
   return (
     <ProductView
+      key={product.slug}
       product={product}
       category={category}
       related={related}
