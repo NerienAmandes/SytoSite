@@ -98,9 +98,6 @@ function SvoystvaSection({ data }) {
         <ol className="svoystva__list">
           {data.items.map((item, i) => (
             <li key={i} className="svoystva__item">
-              <span className="svoystva__glyph" aria-hidden="true">
-                {item.glyph}
-              </span>
               <span className="svoystva__text">{item.text}</span>
             </li>
           ))}
