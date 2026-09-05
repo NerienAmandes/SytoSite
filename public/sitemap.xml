@@ -111,11 +111,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://syto.ru/product/nabor-podarochnyy-syto</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://syto.ru/product/utka-goryachego-kopcheniya-yabloko</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -137,6 +132,11 @@
   </url>
   <url>
     <loc>https://syto.ru/product/perepelka-goryachego-kopcheniya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://syto.ru/product/perepelka-syrovyalenaya</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -327,6 +327,11 @@
   </url>
   <url>
     <loc>https://syto.ru/product/gidro-lat-ivan-chay</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://syto.ru/product/syta-0-5-plastik</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -89,7 +89,11 @@ function ProductView({ product, category, related }) {
   const gallery = Array.isArray(product.gallery) && product.gallery.length > 0
     ? product.gallery
     : null
-  const [activeImage, setActiveImage] = useState(product.image)
+  // Начальная картинка: предпочитаем изображение первого варианта,
+  // чтобы главное фото соответствовало фасовке по умолчанию.
+  const firstVariantImage =
+    Array.isArray(product.variants) && product.variants[0] && product.variants[0].image
+  const [activeImage, setActiveImage] = useState(firstVariantImage || product.image)
 
   const currentVariant = product.variants[selectedVariant] || product.variants[0]
 
