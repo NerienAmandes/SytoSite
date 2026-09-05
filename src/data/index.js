@@ -15,16 +15,16 @@ export const faq = Array.isArray(faqJson)
     ? faqJson
     : faqJson.items || []
 
-// --- Плейсхолдеры: эмодзи + цветовая плашка по слагу категории ---
+// --- Плейсхолдеры: цветовая плашка по слагу категории (без эмодзи) ---
 const CATEGORY_STYLES = {
-    napitki: { glyph: '🍯', tint: '#F0D899', label: 'Напиток' },
-    myod: { glyph: '🍯', tint: '#E8B23A', label: 'Мёд' },
-    'myasnye-delikatesy': { glyph: '🍖', tint: '#C76B6B', label: 'Деликатес' },
-    gidrolaty: { glyph: '🌿', tint: '#A8C97A', label: 'Гидролат' },
+    napitki: { tint: '#F0D899', label: 'Напиток' },
+    myod: { tint: '#E8B23A', label: 'Мёд' },
+    'myasnye-delikatesy': { tint: '#C76B6B', label: 'Деликатес' },
+    gidrolaty: { tint: '#A8C97A', label: 'Гидролат' },
 }
 
 export function categoryStyle(slug) {
-    return CATEGORY_STYLES[slug] || { glyph: '✦', tint: '#D49A36', label: '' }
+    return CATEGORY_STYLES[slug] || { tint: '#D49A36', label: '' }
 }
 
 // --- Цена: минимальная из вариантов, форматированная строкой ---
