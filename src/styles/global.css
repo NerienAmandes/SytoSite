@@ -3155,7 +3155,11 @@ a.card:hover {
     top: 100%;
     left: 0;
     right: 0;
-    background-color: var(--color-bg);
+    background-color: #F5F1E8;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     box-shadow: 0 8px 20px rgba(44, 36, 27, 0.1);
