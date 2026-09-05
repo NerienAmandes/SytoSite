@@ -74,6 +74,8 @@ export function searchProducts(query, limit) {
 const IMAGE_DIMS = {
     siten: { w: 622, h: 624 },
     'СЫТА': { w: 1200, h: 960 },
+    svetlayasita: { w: 1200, h: 960 },
+    temnayasita: { w: 1200, h: 960 },
     nalivka: { w: 612, h: 604 },
     uksus: { w: 1024, h: 768 },
     rose: { w: 622, h: 614 },
@@ -105,6 +107,22 @@ const IMAGE_DIMS = {
     'syto-napintki': { w: 1200, h: 669 },
     myaso: { w: 1200, h: 800 },
     hydro: { w: 1200, h: 800 },
+    // Добавлено при подключении файлов из public/images/ (см. scripts/wire-images.mjs)
+    arzamasgus: { w: 1086, h: 1448 },
+    kipreichaiferment: { w: 1086, h: 1448 },
+    kiprejsmalinoy: { w: 1086, h: 1448 },
+    kvas: { w: 1024, h: 1536 },
+    ognevka: { w: 1086, h: 1448 },
+    uzvarnoldvapuat: { w: 1086, h: 1448 },
+    myod: { w: 1024, h: 559 },
+    // Добавлено во второй итерации (scripts/wire-images-2.mjs)
+    siria: { w: 1086, h: 1448 },
+    mnogasit: { w: 1200, h: 960 },
+    sitokakoeto: { w: 1024, h: 1536 },
+    sirovyalen: { w: 1086, h: 1448 },
+    sitaplastik: { w: 1086, h: 1448 },
+    uzvarnolpuat: { w: 1086, h: 1448 },
+    uzvarnolsemdpuat: { w: 1086, h: 1448 },
 }
 
 export function imageDims(imagePath) {

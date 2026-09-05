@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { categories, categoryStyle } from '../data/index.js'
+import { categories, categoryStyle, imageDims } from '../data/index.js'
 import Divider from '../components/Divider.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
 import useSeo from '../hooks/useSeo.js'
@@ -41,10 +41,26 @@ export default function Catalog() {
               >
                 <div
                   className="category-card__media"
-                  style={{ backgroundColor: style.tint }}
+                  style={
+                    category.image
+                      ? { backgroundColor: style.tint, padding: 0 }
+                      : { backgroundColor: style.tint }
+                  }
                   aria-hidden="true"
                 >
-                  <span className="category-card__glyph">{style.glyph}</span>
+                  {category.image ? (
+                    <img
+                      src={category.image}
+                      alt=""
+                      className="category-card__image"
+                      loading="lazy"
+                      decoding="async"
+                      width={imageDims(category.image)?.w}
+                      height={imageDims(category.image)?.h}
+                    />
+                  ) : (
+                    <span className="category-card__glyph">{style.glyph}</span>
+                  )}
                 </div>
                 <h2 className="category-card__title">{category.title}</h2>
                 {category.shortDescription && (

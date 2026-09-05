@@ -58,6 +58,17 @@ export default function Category() {
         <p className="page__intro">{category.shortDescription}</p>
       )}
 
+      {categorySlug === 'napitki' && (
+        <aside className="discount-banner" role="note">
+          <span className="discount-banner__icon" aria-hidden="true">✦</span>
+          <div className="discount-banner__text">
+            <strong>Скидки при заказе напитков:</strong>{' '}
+            от&nbsp;3&nbsp;штук&nbsp;— скидка&nbsp;5%, от&nbsp;5&nbsp;штук&nbsp;— скидка&nbsp;10%.
+            Скидка считается автоматически при оформлении заказа.
+          </div>
+        </aside>
+      )}
+
       {categoryProducts.length === 0 ? (
         <p className="page__empty">В этой категории пока нет товаров.</p>
       ) : (

@@ -74,11 +74,24 @@ export default function Kontakty() {
 
             <div>
               <div className="contacts__map" aria-label="Расположение фермы на карте">
-                <span className="contacts__map-glyph" aria-hidden="true">⌖</span>
-                <span className="contacts__map-text">
-                  Карта будет добавлена
-                </span>
+                <iframe
+                  className="contacts__map-iframe"
+                  src="https://yandex.ru/map-widget/v1/?ll=36.536971%2C55.661618&z=15&pt=36.536971%2C55.661618%2Cpm2gnm"
+                  title="Яндекс.Карта — расположение ЭКОфермы «Сыто»"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
+              <p className="contacts__map-link">
+                <a
+                  href="https://yandex.ru/maps/-/CTXTeZpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Открыть в Яндекс.Картах →
+                </a>
+              </p>
 
               <RequestForm
                 submitLabel={data.form.submitLabel}
