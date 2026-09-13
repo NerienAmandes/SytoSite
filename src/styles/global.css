@@ -1430,6 +1430,27 @@ a.card:hover {
   color: var(--color-text);
 }
 
+/* ===== Анонс напитка «Сыто» на главной ===== */
+.syto-teaser {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(212, 154, 54, 0.08) 0%,
+      rgba(124, 182, 91, 0.08) 100%
+    ),
+    var(--color-bg);
+  border-top: 1px solid rgba(212, 154, 54, 0.2);
+  border-bottom: 1px solid rgba(212, 154, 54, 0.2);
+}
+
+.syto-teaser .section__title {
+  color: var(--color-honey);
+}
+
+.syto-teaser .about__text {
+  font-style: italic;
+}
+
 /* ===== Преимущества ===== */
 .advantages__grid {
   display: grid;

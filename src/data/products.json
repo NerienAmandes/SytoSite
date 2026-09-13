@@ -20,7 +20,8 @@
       "variants": [
         {
           "label": "0,5 л, пластик",
-          "price": 250
+          "price": 250,
+          "image": "/images/sitaplastik.webp"
         },
         {
           "label": "0,5 л, стекло",
@@ -177,6 +178,30 @@
       ]
     },
     {
+      "slug": "chay-iz-kipreya-fermentirovannyy-presovannyy",
+      "category": "napitki",
+      "title": "Чай из кипрея ферментированный, прессованный",
+      "shortDescription": "Ферментированный кипрей в прессованном виде — удобный травяной чай без кофеина.",
+      "description": "Иван-чай, ферментированный по традиционной технологии и спрессованный в удобную форму. Мягкий, ароматный, без кофеина. Содержит множество полезных микроэлементов, подходит для ежедневного употребления.",
+      "image": "/images/kipreichaifermentpred.webp",
+      "available": true,
+      "tags": [
+        "чай",
+        "иван-чай",
+        "кипрей",
+        "прессованный",
+        "травы",
+        "без кофеина"
+      ],
+      "pricePer": "50 г",
+      "variants": [
+        {
+          "label": "50 г",
+          "price": 250
+        }
+      ]
+    },
+    {
       "slug": "chay-iz-kipreya-yagodnyy",
       "category": "napitki",
       "title": "Чай из кипрея с листом смородины или малины",
@@ -225,13 +250,13 @@
         },
         {
           "label": "0,5 л",
-          "price": 325,
-          "image": "/images/uzvarnolpuat.webp"
+          "price": 375,
+          "image": "/images/uzvarnolsemdpuat.webp"
         },
         {
           "label": "0,75 л",
           "price": 425,
-          "image": "/images/uzvarnolsemdpuat.webp"
+          "image": "/images/uzvarnolpuat.webp"
         }
       ]
     },
@@ -1324,6 +1349,50 @@
         {
           "label": "0,5 л, пластик",
           "price": 250
+        }
+      ]
+    },
+    {
+      "slug": "fermerskiy-viski",
+      "category": "napitki",
+      "title": "Фермерский виски",
+      "shortDescription": "Крепкий фермерский виски собственного производства.",
+      "description": "Фермерский виски — крепкий напиток собственного производства, приготовленный по авторской рецептуре. Обладает насыщенным зерновым вкусом и приятным послевкусием.",
+      "image": "/images/whiskey.webp",
+      "available": true,
+      "tags": [
+        "напиток",
+        "виски",
+        "крепкий",
+        "фермерский"
+      ],
+      "pricePer": "0,5 л",
+      "variants": [
+        {
+          "label": "0,5 л, стекло",
+          "price": 950
+        }
+      ]
+    },
+    {
+      "slug": "khrenovukha",
+      "category": "napitki",
+      "title": "Хреновуха",
+      "shortDescription": "Классическая русская хреновуха на меду.",
+      "description": "Домашняя хреновуха на натуральном мёду с добавлением хрена и пряностей. Традиционный русский напиток с характерной остротой хрена и медовой сладостью.",
+      "image": "/images/hrenovyxa.webp",
+      "available": true,
+      "tags": [
+        "напиток",
+        "хреновуха",
+        "мёд",
+        "классика"
+      ],
+      "pricePer": "0,5 л",
+      "variants": [
+        {
+          "label": "0,5 л, стекло",
+          "price": 750
         }
       ]
     }
