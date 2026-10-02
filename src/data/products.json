@@ -156,7 +156,7 @@
       "title": "Чай из кипрея ферментированный",
       "shortDescription": "Ферментированный кипрей (иван-чай) — мягкий травяной чай без кофеина.",
       "description": "Иван-чай, ферментированный по традиционной технологии. Мягкий, ароматный, без кофеина. Содержит множество полезных микроэлементов, подходит для ежедневного употребления.",
-      "image": "/images/chai.png",
+      "image": "/images/chai.webp",
       "available": true,
       "tags": [
         "чай",
@@ -879,7 +879,7 @@
       "title": "Липовый мёд",
       "shortDescription": "Светлый ароматный липовый мёд — классика русского мёда.",
       "description": "Липовый мёд — один из самых популярных и полезных сортов. Светлый, с тонким цветочным ароматом и приятным сладким вкусом. Собирается на пасеках ЭКОфермы в период цветения липы. Доступен в разных фасовках.",
-      "image": "/images/myodLipovii.png",
+      "image": "/images/myodLipovii.webp",
       "available": true,
       "featured": true,
       "tags": [
@@ -897,17 +897,17 @@
         {
           "label": "0,28 л",
           "price": 400,
-          "image": "/images/Myod025k.png"
+          "image": "/images/Myod025k.webp"
         },
         {
           "label": "0,35 л",
           "price": 550,
-          "image": "/images/myodLipovii.png"
+          "image": "/images/myodLipovii.webp"
         },
         {
           "label": "0,55 л",
           "price": 850,
-          "image": "/images/myodLipovii.png"
+          "image": "/images/myodLipovii.webp"
         },
         {
           "label": "1 л",
@@ -916,7 +916,7 @@
         {
           "label": "3 л",
           "price": 4500,
-          "image": "/images/miod1Litr.png"
+          "image": "/images/miod1Litr.webp"
         }
       ]
     },
@@ -957,7 +957,7 @@
       "title": "Мёд луговое разнотравье",
       "shortDescription": "Золотистый мягкий мёд лугового разнотравья — цветочный аромат.",
       "description": "Мёд лугового разнотравья — золотистый, мягкий, с богатым цветочным ароматом. Собирается с луговых трав в экологически чистых районах. Универсальный сорт на каждый день.",
-      "image": "/images/lygovoeraznotravye.png",
+      "image": "/images/lygovoeraznotravye.webp",
       "available": true,
       "tags": [
         "мёд",
@@ -1011,7 +1011,7 @@
       "title": "Жгучий мёд (с острым перцем, с хреном)",
       "shortDescription": "Жгучий мёд с острым перцем или хреном — пикантная добавка к мясу и сырам.",
       "description": "Жгучий мёд с добавлением острого перца или хрена. Необычное сочетание сладости мёда и остроты специй. Идеально подходит к мясу, сырам, в качестве соуса и маринада.",
-      "image": "/images/myod.webp",
+      "image": "/images/myodspertem.png",
       "available": true,
       "tags": [
         "мёд",
@@ -1035,7 +1035,7 @@
       "title": "Золотой орешек (орехи в меду)",
       "shortDescription": "Орехи в меду — классический десерт «Золотой орешек».",
       "description": "«Золотой орешек» — натуральные орехи в меду. Классическое лакомство, богатое витаминами и полезными жирами. Подходит как десерт и полезный перекус.",
-      "image": "/images/zolotoyorechek.png",
+      "image": "/images/zolotoyorechek.webp",
       "available": true,
       "tags": [
         "мёд",
@@ -1048,7 +1048,7 @@
         {
           "label": "0,35 л, стекло",
           "price": 550,
-          "image": "/images/zolotoyorechek.png"
+          "image": "/images/zolotoyorechek.webp"
         }
       ]
     },
@@ -1126,7 +1126,7 @@
       "title": "Перга в меду (Пчелиный хлеб)",
       "shortDescription": "Перга в меду («Пчелиный хлеб») — концентрированный витаминный продукт.",
       "description": "Перга в меду — «пчелиный хлеб», законсервированная пчёлами цветочная пыльца. Концентрированный источник витаминов, минералов и аминокислот. Мощный природный иммуностимулятор.",
-      "image": "/images/myod.webp",
+      "image": "/images/pergavmedu.webp",
       "available": true,
       "tags": [
         "перга",
@@ -1139,10 +1139,10 @@
       "variants": [
         {
           "label": "0,35 л, стекло",
-          "price": 550
+          "price": 550,
+          "image": "/images/pergavmedu.webp"
         }
-      ],
-      "imageNote": "заглушка"
+      ]
     },
     {
       "slug": "myod-v-sotakh",
@@ -1218,7 +1218,7 @@
       "title": "Натуральный воск",
       "shortDescription": "Натуральный пчелиный воск — для домашних свечей и косметики.",
       "description": "Натуральный пчелиный воск — продукт пчеловодства без добавок. Используется для изготовления домашних свечей, натуральной косметики, бальзамов, мазей, для полировки дерева.",
-      "image": "/images/myod.webp",
+      "image": "/images/vosk.webp",
       "available": true,
       "tags": [
         "воск",
@@ -1231,10 +1231,10 @@
       "variants": [
         {
           "label": "100 г",
-          "price": 190
+          "price": 190,
+          "image": "/images/vosk.webp"
         }
-      ],
-      "imageNote": "заглушка"
+      ]
     },
     {
       "slug": "gidro-lat-belaya-roza",
