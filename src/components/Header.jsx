@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 
 import { categories } from '../data/index.js'
+import { useCart } from '../context/CartContext.jsx'
 import Search from './Search.jsx'
 
 /**
@@ -16,6 +17,7 @@ import Search from './Search.jsx'
  */
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const { count } = useCart()
 
   // Закрываем меню при переходе на новую страницу (мобилка)
   const location = useLocation()
@@ -44,6 +46,28 @@ export default function Header() {
         <div className="header__search">
           <Search />
         </div>
+
+        <Link to="/cart" className="cart-link" aria-label={`Корзина, товаров: ${count}`}>
+          <svg
+            className="cart-link__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.5L21 8H6" />
+            <circle cx="10" cy="20" r="1.4" />
+            <circle cx="18" cy="20" r="1.4" />
+          </svg>
+          {count > 0 && (
+            <span className="cart-link__badge" aria-hidden="true">
+              {count > 99 ? '99+' : count}
+            </span>
+          )}
+        </Link>
 
         <button
           type="button"

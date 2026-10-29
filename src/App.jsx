@@ -12,6 +12,7 @@ import Dostavka from './pages/Dostavka.jsx'
 import Optovikam from './pages/Optovikam.jsx'
 import Kontakty from './pages/Kontakty.jsx'
 import SearchResults from './pages/SearchResults.jsx'
+import Cart from './pages/Cart.jsx'
 import FaqPage from './pages/FaqPage.jsx'
 import NotFound from './pages/NotFound.jsx'
 
@@ -26,6 +27,7 @@ export default function App() {
         {/* ОДИН роут для всех категорий: /catalog/napitki, /catalog/myod, /catalog/myasnye-delikatesy, /catalog/gidrolaty */}
         <Route path="/catalog/:categorySlug" element={<Category />} />
         <Route path="/product/:slug" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/o-ferme" element={<OFerme />} />
         <Route path="/dostavka-i-oplata" element={<Dostavka />} />
         <Route path="/optovikam" element={<Optovikam />} />

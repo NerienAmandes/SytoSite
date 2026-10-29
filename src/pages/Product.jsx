@@ -3,11 +3,11 @@ import { useParams, Link } from 'react-router-dom'
 
 import { products, categories, imageDims } from '../data/index.js'
 import { formatPrice } from '../data/index.js'
+import { useCart, nextDiscountHint } from '../context/CartContext.jsx'
 
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
-import OrderModal from '../components/OrderModal.jsx'
 import ImageZoom from '../components/ImageZoom.jsx'
 import useSeo from '../hooks/useSeo.js'
 
@@ -79,8 +79,10 @@ export default function Product() {
 }
 
 function ProductView({ product, category, related }) {
+  const { addItem } = useCart()
   const [selectedVariant, setSelectedVariant] = useState(0)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [quantity, setQuantity] = useState(1)
+  const [isAdded, setIsAdded] = useState(false)
   const [isZoomOpen, setIsZoomOpen] = useState(false)
   const [isVariantOpen, setIsVariantOpen] = useState(false)
   const variantDropdownRef = useRef(null)
@@ -96,6 +98,36 @@ function ProductView({ product, category, related }) {
   const [activeImage, setActiveImage] = useState(firstVariantImage || product.image)
 
   const currentVariant = product.variants[selectedVariant] || product.variants[0]
+
+  const isNapitok = product.category === 'napitki'
+  const cartHint = nextDiscountHint(quantity, isNapitok)
+
+  // Много вариантов (веса, объёмы) — показываем плитками, иначе выпадающим списком
+  const isTilesView = product.variants.length > 2
+
+  function handleAddToCart() {
+    addItem({
+      product,
+      variantLabel: currentVariant.label,
+      unitPrice: currentVariant.price,
+      quantity,
+      isNapitok,
+      image: currentVariant.image || activeImage,
+    })
+    setIsAdded(true)
+    setTimeout(() => setIsAdded(false), 2000)
+  }
+
+  // Смена фасовки сбрасывает количество и подсветку «В корзине»
+  function handleSelectVariant(index, variant) {
+    setSelectedVariant(index)
+    if (variant.image) {
+      setActiveImage(variant.image)
+    }
+    setQuantity(1)
+    setIsAdded(false)
+    setIsVariantOpen(false)
+  }
 
   // Закрываем выпадашку фасовки по клику вне и Escape
   useEffect(() => {
@@ -213,6 +245,33 @@ function ProductView({ product, category, related }) {
           <p className="product__short">{product.shortDescription}</p>
 
           {product.variants.length > 0 && (
+            isTilesView ? (
+              /* Много вариантов (например, веса 100/200/250/300/400 г) —
+                 показываем плитками, без лишнего клика по выпадающему списку. */
+              <div className="product__variants">
+                <h3 className="product__variants-title">Фасовка</h3>
+                <div className="product__tiles" role="listbox" aria-label="Выбор фасовки">
+                  {product.variants.map((v, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      role="option"
+                      aria-selected={i === selectedVariant}
+                      className={
+                        'product__tile' +
+                        (i === selectedVariant ? ' product__tile--active' : '')
+                      }
+                      onClick={() => handleSelectVariant(i, v)}
+                    >
+                      <span className="product__tile-label">{v.label}</span>
+                      <span className="product__tile-price">
+                        {formatPrice(v.price)} ₽
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
             <div
               className={
                 'product__variants' +
@@ -262,13 +321,7 @@ function ProductView({ product, category, related }) {
                         <button
                           type="button"
                           className="product__variant"
-                          onClick={() => {
-                            setSelectedVariant(i)
-                            if (v.image) {
-                              setActiveImage(v.image)
-                            }
-                            setIsVariantOpen(false)
-                          }}
+                          onClick={() => handleSelectVariant(i, v)}
                         >
                           <span className="product__variant-label">
                             {v.label}
@@ -283,6 +336,7 @@ function ProductView({ product, category, related }) {
                 </ul>
               )}
             </div>
+            )
           )}
 
           {product.category === 'napitki' && (
@@ -310,14 +364,55 @@ function ProductView({ product, category, related }) {
                 </span>
               )}
             </div>
+          </div>
+
+          <div className="product__cart">
+            <div className="product__qty">
+              <button
+                type="button"
+                className="product__qty-btn"
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                disabled={quantity <= 1}
+                aria-label="Уменьшить количество"
+              >
+                −
+              </button>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="product__qty-input"
+                value={quantity}
+                onChange={(e) => {
+                  const v = e.target.value.replace(/\D/g, '')
+                  setQuantity(v === '' ? 1 : Math.min(99, Number(v)))
+                }}
+                aria-label="Количество"
+              />
+              <button
+                type="button"
+                className="product__qty-btn"
+                onClick={() => setQuantity((q) => Math.min(99, q + 1))}
+                disabled={quantity >= 99}
+                aria-label="Увеличить количество"
+              >
+                +
+              </button>
+            </div>
+
             <button
               type="button"
-              className="btn"
-              onClick={() => setIsModalOpen(true)}
+              className={'btn product__add' + (isAdded ? ' product__add--done' : '')}
+              onClick={handleAddToCart}
             >
-              Заказать
+              {isAdded ? '✓ В корзине' : 'В корзину'}
             </button>
           </div>
+
+          {product.category === 'napitki' && cartHint && (
+            <p className="product__discount-hint" role="note">
+              Добавьте ещё {cartHint.need} шт. и&nbsp;получите скидку&nbsp;{cartHint.percent}%
+            </p>
+          )}
         </div>
       </div>
 
@@ -340,15 +435,6 @@ function ProductView({ product, category, related }) {
           </div>
         </section>
       )}
-
-      <OrderModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        productTitle={product.title}
-        variantLabel={currentVariant.label}
-        unitPrice={currentVariant.price}
-        isNapitok={product.category === 'napitki'}
-      />
 
       <ImageZoom
         isOpen={isZoomOpen}
