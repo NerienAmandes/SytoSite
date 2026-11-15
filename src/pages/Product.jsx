@@ -273,70 +273,70 @@ function ProductView({ product, category, related }) {
                 </div>
               </div>
             ) : (
-            <div
-              className={
-                'product__variants' +
-                (isVariantOpen ? ' product__variants--open' : '')
-              }
-              ref={variantDropdownRef}
-            >
-              <h3 className="product__variants-title">Фасовка</h3>
-              <button
-                type="button"
-                className="product__variant-toggle"
-                onClick={() => setIsVariantOpen((v) => !v)}
-                aria-haspopup="listbox"
-                aria-expanded={isVariantOpen}
+              <div
+                className={
+                  'product__variants' +
+                  (isVariantOpen ? ' product__variants--open' : '')
+                }
+                ref={variantDropdownRef}
               >
-                <span className="product__variant-toggle-label">
-                  {currentVariant.label}
-                </span>
-                <span className="product__variant-toggle-price">
-                  {formatPrice(currentVariant.price)}&nbsp;₽
-                </span>
-                <span
-                  className="product__variant-toggle-arrow"
-                  aria-hidden="true"
+                <h3 className="product__variants-title">Фасовка</h3>
+                <button
+                  type="button"
+                  className="product__variant-toggle"
+                  onClick={() => setIsVariantOpen((v) => !v)}
+                  aria-haspopup="listbox"
+                  aria-expanded={isVariantOpen}
                 >
-                  ▾
-                </span>
-              </button>
-              {isVariantOpen && (
-                <ul
-                  className="product__variant-list"
-                  role="listbox"
-                  aria-label="Выбор фасовки"
-                >
-                  {product.variants.map((v, i) => {
-                    const isActive = i === selectedVariant
-                    return (
-                      <li
-                        key={i}
-                        className={
-                          'product__variant-item' +
-                          (isActive ? ' product__variant-item--active' : '')
-                        }
-                        role="option"
-                        aria-selected={isActive}
-                      >
-                        <button
-                          type="button"
-                          className="product__variant"
-                          onClick={() => handleSelectVariant(i, v)}
+                  <span className="product__variant-toggle-label">
+                    {currentVariant.label}
+                  </span>
+                  <span className="product__variant-toggle-price">
+                    {formatPrice(currentVariant.price)}&nbsp;₽
+                  </span>
+                  <span
+                    className="product__variant-toggle-arrow"
+                    aria-hidden="true"
+                  >
+                    ▾
+                  </span>
+                </button>
+                {isVariantOpen && (
+                  <ul
+                    className="product__variant-list"
+                    role="listbox"
+                    aria-label="Выбор фасовки"
+                  >
+                    {product.variants.map((v, i) => {
+                      const isActive = i === selectedVariant
+                      return (
+                        <li
+                          key={i}
+                          className={
+                            'product__variant-item' +
+                            (isActive ? ' product__variant-item--active' : '')
+                          }
+                          role="option"
+                          aria-selected={isActive}
                         >
-                          <span className="product__variant-label">
-                            {v.label}
-                          </span>
-                          <span className="product__variant-price">
-                            {formatPrice(v.price)}&nbsp;₽
-                          </span>
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-            </div>
+                          <button
+                            type="button"
+                            className="product__variant"
+                            onClick={() => handleSelectVariant(i, v)}
+                          >
+                            <span className="product__variant-label">
+                              {v.label}
+                            </span>
+                            <span className="product__variant-price">
+                              {formatPrice(v.price)}&nbsp;₽
+                            </span>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+              </div>
             )
           )}
 
@@ -421,7 +421,11 @@ function ProductView({ product, category, related }) {
       <section className="section">
         <h2 className="section__title">Описание</h2>
         <Divider />
-        <p className="product__description">{product.description}</p>
+        <div className="product__description">
+          {product.description.split('\n\n').map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
       </section>
 
       {/* ----- Похожие товары ----- */}
