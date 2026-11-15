@@ -10,7 +10,8 @@ npm-debug.log*
 .env
 .env.local
 # Конфигурация с секретами
-db.config.php
+# Конфигурация базы данных
+/public/db.config.php
 .env
 .env.*
 !.env.example
