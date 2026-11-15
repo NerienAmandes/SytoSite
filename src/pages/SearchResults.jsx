@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 
 import { searchProducts } from '../data/index.js'
+import { useData } from '../context/DataContext.jsx'
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
@@ -9,9 +10,10 @@ import useSeo from '../hooks/useSeo.js'
 
 export default function SearchResults() {
   const [params] = useSearchParams()
+  const { products } = useData()
   const q = (params.get('q') || '').trim()
 
-  const results = useMemo(() => (q ? searchProducts(q) : []), [q])
+  const results = useMemo(() => (q ? searchProducts(q, products) : []), [q, products])
 
   useSeo({
     title: q ? `Поиск: ${q}` : 'Поиск',

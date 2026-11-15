@@ -5,4 +5,4 @@ Allow: /
 Disallow: /order/
 
 # Ссылка на карту сайта
-Sitemap: https://syto.ru/sitemap.xml
+Sitemap: https://сыто.su/sitemap.xml

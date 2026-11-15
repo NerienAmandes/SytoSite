@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react'
  * Загрузочный экран — «штампуется печать ЭКОфермы».
  * Показывается при каждой загрузке страницы.
  *
- * Внутри — SVG-эмблема: круговая рамка + медовые соты + буква «С» в соте.
- * Анимация: контур рисуется через stroke-dasharray, буква появляется в финале.
+ * Внутри — SVG-эмблема и надпись СЫТО,
+ * украшенная символами Исток с обеих сторон.
  */
+
 export default function Preloader() {
-  const [state, setState] = useState('loading') // 'loading' | 'hiding' | 'hidden'
+  const [state, setState] = useState('loading')
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow
@@ -43,44 +44,88 @@ export default function Preloader() {
 
   return (
     <div className={`preloader preloader--${state}`} aria-hidden="true">
+
       <div className="preloader__seal">
         <svg
           className="preloader__emblem"
-          viewBox="0 0 200 200"
+          viewBox="-15 -15 230 230"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Внешний круг — обводка рисуется */}
-          <circle
-            cx="100"
-            cy="100"
-            r="92"
-            className="emblem__ring emblem__ring--outer"
-          />
-          {/* Внутренний круг */}
-          <circle
-            cx="100"
-            cy="100"
-            r="72"
-            className="emblem__ring emblem__ring--inner"
+          {/* Волнистое солнце по референсу */}
+          <image
+            href="/images/solntse-volnistoe.svg"
+            x="-15"
+            y="-15"
+            width="230"
+            height="230"
+            preserveAspectRatio="xMidYMid meet"
           />
 
-          {/* Большая центральная сота с буквой «С» */}
-          <polygon
-            points={bigHex}
-            className="emblem__hex"
-          />
+          {/* Буква С */}
           <text
             x="100"
-            y="115"
+            y="100"
             textAnchor="middle"
+            dominantBaseline="central"
             className="emblem__letter"
+            style={{
+              fontFamily: 'var(--font-ponomar)',
+              fontSize: '60px',
+              fill: '#000000',
+              stroke: '#000000',
+              strokeWidth: '1.8px',
+              paintOrder: 'stroke fill',
+            }}
           >
             С
           </text>
         </svg>
       </div>
-      <div className="preloader__title">СЫТО</div>
-      <div className="preloader__caption">ЭКОферма · медовая лавка</div>
+
+      {/* СИМВОЛ — СЫТО — СИМВОЛ */}
+      <div className="preloader__title-wrap">
+
+        <img
+          src="../public/images/znak.png"
+          className="preloader__istok--left"
+          alt=""
+        />
+
+        <div
+          className="preloader__title"
+          style={{
+            fontFamily: 'var(--font-ponomar)',
+            fontWeight: 700,
+            fontSize: '2.4rem',
+            letterSpacing: '0.18em',
+            WebkitTextStroke: '0.7px currentColor',
+          }}
+        >
+          СЫТО
+        </div>
+
+        <img
+          src="../public/images/znak.png"
+          className="preloader__istok--right"
+          alt=""
+        />
+
+      </div>
+
+      {/* Подпись */}
+      <div
+        className="preloader__caption"
+        style={{
+          fontSize: '1rem',
+          fontWeight: 600,
+          letterSpacing: '0.09em',
+          color: 'var(--color-text)',
+          opacity: 0.9,
+        }}
+      >
+        Исконно наше · родное
+      </div>
+
     </div>
   )
 }

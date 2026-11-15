@@ -40,6 +40,8 @@
   --font-heading: 'Ruslan Display', 'Podkova', Georgia, serif;
   /* PT Sans — нейтральный, не спорит с декоративным Ruslan */
   --font-body: 'PT Sans', 'Lora', system-ui, sans-serif;
+  /* Vertograd — фирменный шрифт для логотипа «сыто» */
+  --font-ponomar: 'Ponomar', var(--font-heading);
 
   /* ----- Прочее ----- */
   --max-width: 1200px;
@@ -53,6 +55,20 @@
   /* Material-кривая для transform-анимаций */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ===== Шрифт Vertograd (фирменный) =====
+   Положи файл шрифта в public/fonts/Vertograd.woff2
+   Если используешь другой формат — поменяй src. */
+@font-face {
+  font-family: 'Ponomar';
+  src: url('/fonts/PonomarUnicode.woff2') format('woff2'),
+    url('/fonts/PonomarUnicode.woff') format('woff'),
+    url('/fonts/PonomarUnicode.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 /* ===== Сброс и базовый типографический ритм ===== */
 *,
@@ -74,20 +90,16 @@ body {
   background-color: var(--color-bg);
   /* Текстура «льняной ткани» — едва заметная сетка + мягкий шум */
   background-image:
-    repeating-linear-gradient(
-      0deg,
+    repeating-linear-gradient(0deg,
       rgba(168, 153, 115, 0.045) 0,
       rgba(168, 153, 115, 0.045) 1px,
       transparent 1px,
-      transparent 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
+      transparent 4px),
+    repeating-linear-gradient(90deg,
       rgba(168, 153, 115, 0.045) 0,
       rgba(168, 153, 115, 0.045) 1px,
       transparent 1px,
-      transparent 4px
-    );
+      transparent 4px);
   background-attachment: fixed;
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
@@ -171,12 +183,19 @@ a:hover {
 }
 
 @keyframes app-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .app__main { animation: none; }
+  .app__main {
+    animation: none;
+  }
 }
 
 .container {
@@ -207,26 +226,20 @@ main.container {
   background-color: var(--color-bg);
   background-image:
     /* Едва заметная льняная текстура */
-    repeating-linear-gradient(
-      0deg,
+    repeating-linear-gradient(0deg,
       rgba(168, 153, 115, 0.045) 0,
       rgba(168, 153, 115, 0.045) 1px,
       transparent 1px,
-      transparent 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
+      transparent 4px),
+    repeating-linear-gradient(90deg,
       rgba(168, 153, 115, 0.045) 0,
       rgba(168, 153, 115, 0.045) 1px,
       transparent 1px,
-      transparent 4px
-    ),
+      transparent 4px),
     /* Мягкий медовой градиент сверху */
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       rgba(212, 154, 54, 0.08) 0%,
-      transparent 60%
-    );
+      transparent 60%);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -248,13 +261,15 @@ main.container {
   position: relative;
 }
 
+
 .logo {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-ponomar);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
   color: var(--color-text);
   text-decoration: none;
   transition: color var(--transition);
@@ -271,20 +286,16 @@ main.container {
   width: 2.6rem;
   height: 2.6rem;
   background-color: var(--color-honey);
-  background-image: linear-gradient(
-    135deg,
-    var(--color-honey) 0%,
-    #E5B854 60%,
-    var(--color-honey-dark) 100%
-  );
+  background-image: linear-gradient(135deg,
+      var(--color-honey) 0%,
+      #E5B854 60%,
+      var(--color-honey-dark) 100%);
   color: #fff;
   font-size: 1.4rem;
   line-height: 1;
   /* Шестиугольная сота */
-  clip-path: polygon(
-    50% 0%, 100% 25%, 100% 75%,
-    50% 100%, 0% 75%, 0% 25%
-  );
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%,
+      50% 100%, 0% 75%, 0% 25%);
   /* Лёгкая тень «оттиска» */
   filter: drop-shadow(0 2px 3px rgba(212, 154, 54, 0.35));
   transition: transform var(--transition);
@@ -296,7 +307,9 @@ main.container {
 
 .logo__text {
   position: relative;
-  font-weight: 400;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  -webkit-text-stroke: 0.4px currentColor;
 }
 
 /* Декоративная линия под логотипом при наведении */
@@ -307,11 +320,9 @@ main.container {
   right: 0;
   bottom: -4px;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    var(--color-honey) 0%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      var(--color-honey) 0%,
+      transparent 100%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--transition-slow);
@@ -319,6 +330,18 @@ main.container {
 
 .logo:hover .logo__text::after {
   transform: scaleX(1);
+}
+
+.logo__wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+
+.logo__text {
+  position: relative;
+  font-weight: 600;
 }
 
 .nav__list {
@@ -350,11 +373,9 @@ main.container {
   right: 0.85rem;
   bottom: 0.35rem;
   height: 2px;
-  background: linear-gradient(
-    90deg,
-    var(--color-honey) 0%,
-    var(--color-honey-dark) 100%
-  );
+  background: linear-gradient(90deg,
+      var(--color-honey) 0%,
+      var(--color-honey-dark) 100%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--transition);
@@ -457,17 +478,27 @@ main.container {
   transition: transform 0.25s var(--ease), opacity 0.2s var(--ease), top 0.25s var(--ease);
 }
 
-.burger__line:nth-child(1) { top: 0.65rem; }
-.burger__line:nth-child(2) { top: 1.15rem; }
-.burger__line:nth-child(3) { top: 1.65rem; }
+.burger__line:nth-child(1) {
+  top: 0.65rem;
+}
+
+.burger__line:nth-child(2) {
+  top: 1.15rem;
+}
+
+.burger__line:nth-child(3) {
+  top: 1.65rem;
+}
 
 .burger--open .burger__line:nth-child(1) {
   top: 1.15rem;
   transform: rotate(45deg);
 }
+
 .burger--open .burger__line:nth-child(2) {
   opacity: 0;
 }
+
 .burger--open .burger__line:nth-child(3) {
   top: 1.15rem;
   transform: rotate(-45deg);
@@ -825,12 +856,10 @@ main.container {
   top: 50%;
   width: clamp(40px, 12%, 130px);
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-honey) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--color-honey) 50%,
+      transparent 100%);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -844,6 +873,7 @@ main.container {
 }
 
 @media (max-width: 600px) {
+
   /* На совсем узких экранах линии не нужны — бережём место */
   .page__title::before,
   .page__title::after {
@@ -1445,11 +1475,9 @@ a.card:hover {
 /* ===== Анонс напитка «Сыто» на главной ===== */
 .syto-teaser {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(212, 154, 54, 0.08) 0%,
-      rgba(124, 182, 91, 0.08) 100%
-    ),
+      rgba(124, 182, 91, 0.08) 100%),
     var(--color-bg);
   border-top: 1px solid rgba(212, 154, 54, 0.2);
   border-bottom: 1px solid rgba(212, 154, 54, 0.2);
@@ -1537,6 +1565,7 @@ a.card:hover {
   color: var(--color-honey-dark);
   border-bottom: 1px dotted var(--color-honey);
 }
+
 .contacts__line a:hover {
   color: var(--color-honey);
   border-bottom-color: var(--color-honey);
@@ -1676,7 +1705,9 @@ a.card:hover {
 }
 
 /* ===== Хлебные крошки (скрыты) ===== */
-.breadcrumbs { display: none; }
+.breadcrumbs {
+  display: none;
+}
 
 /* ===== Хлебные крошки ===== */
 .breadcrumbs {
@@ -1755,13 +1786,11 @@ a.card:hover {
 .product__image-placeholder {
   aspect-ratio: 1;
   background:
-    repeating-linear-gradient(
-      45deg,
+    repeating-linear-gradient(45deg,
       var(--color-bg-soft) 0,
       var(--color-bg-soft) 14px,
       var(--color-bg) 14px,
-      var(--color-bg) 28px
-    );
+      var(--color-bg) 28px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   display: flex;
@@ -1889,8 +1918,15 @@ a.card:hover {
 }
 
 @keyframes variant-dropdown {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .product__variant-item {
@@ -1979,11 +2015,9 @@ a.card:hover {
   gap: 0.85rem;
   margin: 0 0 2rem;
   padding: 1rem 1.25rem;
-  background: linear-gradient(
-    135deg,
-    rgba(212, 154, 54, 0.12) 0%,
-    rgba(139, 38, 38, 0.08) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(212, 154, 54, 0.12) 0%,
+      rgba(139, 38, 38, 0.08) 100%);
   border: 1px solid var(--color-honey);
   border-left: 4px solid var(--color-honey);
   border-radius: var(--radius);
@@ -2069,13 +2103,25 @@ a.card:hover {
 }
 
 @keyframes modal-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes modal-slide-up {
-  from { transform: translateY(16px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .modal {
@@ -2156,7 +2202,11 @@ a.card:hover {
   line-height: 1.5;
 }
 
-.modal .form { padding: 0; background: transparent; border: none; }
+.modal .form {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
 
 /* Счётчик количества в модалке заказа */
 .modal__qty {
@@ -2274,9 +2324,13 @@ a.card:hover {
   color: var(--color-text);
 }
 
-.modal__summary-label { color: inherit; }
+.modal__summary-label {
+  color: inherit;
+}
 
-.modal__summary-value { white-space: nowrap; }
+.modal__summary-value {
+  white-space: nowrap;
+}
 
 .modal__discount-hint {
   margin: 0.3rem 0 0;
@@ -2305,13 +2359,25 @@ a.card:hover {
 }
 
 @keyframes zoom-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes zoom-pop {
-  from { transform: scale(0.94); opacity: 0; }
-  to   { transform: scale(1);    opacity: 1; }
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .zoom__image {
@@ -2810,12 +2876,12 @@ a.card:hover {
   position: relative;
 }
 
-.form__check-input:checked + .form__check-box {
+.form__check-input:checked+.form__check-box {
   background-color: var(--color-honey);
   border-color: var(--color-honey);
 }
 
-.form__check-input:checked + .form__check-box::after {
+.form__check-input:checked+.form__check-box::after {
   content: '';
   position: absolute;
   left: 0.32rem;
@@ -2827,7 +2893,7 @@ a.card:hover {
   transform: rotate(45deg);
 }
 
-.form__check-input:focus-visible + .form__check-box {
+.form__check-input:focus-visible+.form__check-box {
   border-color: var(--color-honey);
   box-shadow: 0 0 0 3px rgba(212, 154, 54, 0.25);
 }
@@ -3111,8 +3177,15 @@ a.card:hover {
 }
 
 @keyframes notfound-sway {
-  0%, 100% { transform: scaleX(1); }
-  50%      { transform: scaleX(1.02); }
+
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(1.02);
+  }
 }
 
 .notfound__code {
@@ -3140,7 +3213,8 @@ a.card:hover {
   letter-spacing: 0.6em;
   margin: 1.5rem 0;
   font-size: 0.95rem;
-  padding-left: 0.6em; /* компенсация letter-spacing */
+  padding-left: 0.6em;
+  /* компенсация letter-spacing */
 }
 
 .notfound__hint {
@@ -3179,8 +3253,17 @@ a.card:hover {
 }
 
 @keyframes notfound-glow {
-  0%, 100% { opacity: 0.18; transform: scale(1); }
-  50%      { opacity: 0.4;  transform: scale(1.08); }
+
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.08);
+  }
 }
 
 .notfound__door-frame {
@@ -3213,12 +3296,14 @@ a.card:hover {
   max-width: 760px;
   margin: 0 auto;
 }
+
 .syto-about__p {
   font-size: 1.05rem;
   line-height: 1.8;
   margin: 0 0 1em;
   color: var(--color-text);
 }
+
 .syto-about__p:last-child {
   margin-bottom: 0;
 }
@@ -3561,6 +3646,7 @@ a.card:hover {
 
 /* ===== Адаптив ===== */
 @media (max-width: 900px) {
+
   /* ---- Header: включаем бургер ---- */
   .header__inner {
     padding: 0.75rem 1.25rem;
@@ -3653,7 +3739,9 @@ a.card:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .section { padding: 2.25rem 0; }
+  .section {
+    padding: 2.25rem 0;
+  }
 }
 
 @media (max-width: 600px) {
@@ -3672,20 +3760,48 @@ a.card:hover {
     padding: 1.25rem;
   }
 
-  .nav__link { padding: 0.5rem 0.6rem; font-size: 0.9rem; }
-  .card__image { height: 180px; }
+  .nav__link {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.9rem;
+  }
 
-  .hero { padding: 3rem 0 2.5rem; }
-  .hero__title { font-size: 1.9rem; }
-  .hero__subtitle { font-size: 1rem; }
+  .card__image {
+    height: 180px;
+  }
 
-  .product { grid-template-columns: 1fr; gap: 2rem; }
-  .product__media { position: static; }
-  .product__title { font-size: 1.7rem; }
+  .hero {
+    padding: 3rem 0 2.5rem;
+  }
+
+  .hero__title {
+    font-size: 1.9rem;
+  }
+
+  .hero__subtitle {
+    font-size: 1rem;
+  }
+
+  .product {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .product__media {
+    position: static;
+  }
+
+  .product__title {
+    font-size: 1.7rem;
+  }
 
   /* /syto */
-  .receptura__grid { grid-template-columns: repeat(3, 1fr); }
-  .tehnologiya__grid { grid-template-columns: 1fr; }
+  .receptura__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tehnologiya__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 700px) {
@@ -3700,34 +3816,93 @@ a.card:hover {
     flex-direction: row;
     align-items: center;
   }
+
   .card__footer {
     flex-direction: column;
     align-items: stretch;
   }
+
   .card__footer .btn {
     width: 100%;
   }
-  .form { padding: 1.5rem; }
-  .hero__title { font-size: 1.7rem; }
-  .filters__btn { padding: 0.45rem 0.9rem; font-size: 0.9rem; }
-  .product__buy { gap: 1rem; }
-  .product__price-value { font-size: 2rem; }
-  .modal { padding: 1.5rem; }
-  .modal__title { font-size: 1.3rem; }
+
+  .form {
+    padding: 1.5rem;
+  }
+
+  .hero__title {
+    font-size: 1.7rem;
+  }
+
+  .filters__btn {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .product__buy {
+    gap: 1rem;
+  }
+
+  .product__price-value {
+    font-size: 2rem;
+  }
+
+  .modal {
+    padding: 1.5rem;
+  }
+
+  .modal__title {
+    font-size: 1.3rem;
+  }
 
   /* /syto */
-  .receptura__grid { grid-template-columns: repeat(2, 1fr); }
-  .svoystva__item { padding-left: 3.25rem; font-size: 1rem; }
-  .svoystva__item::before { width: 2.2rem; height: 2.2rem; font-size: 1rem; left: 0.4rem; }
-  .svoystva__glyph { font-size: 1.3rem; }
-  .svoystva__phrase { padding: 1.25rem 1.25rem; font-size: 1.1rem; }
+  .receptura__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .svoystva__item {
+    padding-left: 3.25rem;
+    font-size: 1rem;
+  }
+
+  .svoystva__item::before {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1rem;
+    left: 0.4rem;
+  }
+
+  .svoystva__glyph {
+    font-size: 1.3rem;
+  }
+
+  .svoystva__phrase {
+    padding: 1.25rem 1.25rem;
+    font-size: 1.1rem;
+  }
 
   /* 404 */
-  .notfound__code { font-size: 5.5rem; }
-  .notfound__quote { font-size: 1.15rem; }
-  .notfound__divider { letter-spacing: 0.4em; padding-left: 0.4em; }
-  .notfound__door-btn { width: 100%; justify-content: center; }
-  .notfound__actions .btn--ghost { width: 100%; }
+  .notfound__code {
+    font-size: 5.5rem;
+  }
+
+  .notfound__quote {
+    font-size: 1.15rem;
+  }
+
+  .notfound__divider {
+    letter-spacing: 0.4em;
+    padding-left: 0.4em;
+  }
+
+  .notfound__door-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .notfound__actions .btn--ghost {
+    width: 100%;
+  }
 }
 
 /* ============================================
@@ -3744,20 +3919,16 @@ a.card:hover {
   gap: 1.5rem;
   background-color: var(--color-bg);
   background-image:
-    repeating-linear-gradient(
-      0deg,
+    repeating-linear-gradient(0deg,
       rgba(168, 153, 115, 0.045) 0,
       rgba(168, 153, 115, 0.045) 1px,
       transparent 1px,
-      transparent 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
+      transparent 4px),
+    repeating-linear-gradient(90deg,
       rgba(168, 153, 115, 0.045) 0,
       rgba(168, 153, 115, 0.045) 1px,
       transparent 1px,
-      transparent 4px
-    );
+      transparent 4px);
   animation: preloader-fade-in 0.4s ease-out;
 }
 
@@ -3766,14 +3937,74 @@ a.card:hover {
   pointer-events: none;
 }
 
+.preloader__title-wrap {
+  display: grid;
+  grid-template-columns: 42px max-content 42px;
+  align-items: center;
+  justify-content: center;
+  column-gap: 12px;
+  width: max-content;
+  margin: 1rem auto 0;
+}
+
+.preloader__istok {
+  display: block;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.preloader__istok--left {
+  transform: translateX(14px);
+}
+
+.preloader__title {
+  position: static;
+  transform: none !important;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  white-space: nowrap;
+  font-family: var(--font-ponomar);
+  font-weight: 700;
+  font-size: 2.4rem;
+  letter-spacing: 0.18em;
+  -webkit-text-stroke: 0.7px currentColor;
+}
+
+/* Адаптация для телефона */
+@media (max-width: 600px) {
+  .preloader__title-wrap {
+    gap: 0.45rem;
+  }
+
+
+}
+
 @keyframes preloader-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes preloader-fade-out {
-  0%   { opacity: 1; transform: scale(1); filter: blur(0); }
-  100% { opacity: 0; transform: scale(1.08); filter: blur(4px); }
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(4px);
+  }
 }
 
 /* Контейнер печати — теперь прозрачный, всё рисуется в SVG */
@@ -3789,8 +4020,15 @@ a.card:hover {
 }
 
 @keyframes preloader-stamp {
-  0%   { opacity: 0; transform: scale(0.4) rotate(-20deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-20deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
 }
 
 .preloader__emblem {
@@ -3824,7 +4062,9 @@ a.card:hover {
 }
 
 @keyframes emblem-draw {
-  to { stroke-dashoffset: 0; }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Большая центральная сота */
@@ -3841,9 +4081,20 @@ a.card:hover {
 }
 
 @keyframes emblem-hex {
-  0%   { opacity: 0; transform: scale(0.2) rotate(-30deg); }
-  60%  { opacity: 1; transform: scale(1.1) rotate(5deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-30deg);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
 }
 
 /* Полоска из медовых сот под надписью «СЫТО» */
@@ -3871,16 +4122,46 @@ a.card:hover {
   animation: preloader-cell 0.4s var(--easing-spring) backwards;
 }
 
-.preloader__cell:nth-child(1) { animation-delay: 2.15s; transform-origin: 9px 15.5px; }
-.preloader__cell:nth-child(2) { animation-delay: 2.20s; transform-origin: 9px 15.5px; }
-.preloader__cell:nth-child(3) { animation-delay: 2.25s; transform-origin: 9px 15.5px; }
-.preloader__cell:nth-child(4) { animation-delay: 2.30s; transform-origin: 9px 15.5px; }
-.preloader__cell:nth-child(5) { animation-delay: 2.35s; transform-origin: 9px 15.5px; }
+.preloader__cell:nth-child(1) {
+  animation-delay: 2.15s;
+  transform-origin: 9px 15.5px;
+}
+
+.preloader__cell:nth-child(2) {
+  animation-delay: 2.20s;
+  transform-origin: 9px 15.5px;
+}
+
+.preloader__cell:nth-child(3) {
+  animation-delay: 2.25s;
+  transform-origin: 9px 15.5px;
+}
+
+.preloader__cell:nth-child(4) {
+  animation-delay: 2.30s;
+  transform-origin: 9px 15.5px;
+}
+
+.preloader__cell:nth-child(5) {
+  animation-delay: 2.35s;
+  transform-origin: 9px 15.5px;
+}
 
 @keyframes preloader-cell {
-  0%   { opacity: 0; transform: scale(0.2); }
-  60%  { opacity: 1; transform: scale(1.25); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Буква «С» — появляется с эффектом «проявляющегося оттиска» */
@@ -3895,14 +4176,30 @@ a.card:hover {
 }
 
 @keyframes emblem-letter {
-  0%   { opacity: 0; transform: scale(0.3); }
-  60%  { opacity: 1; transform: scale(1.15); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes emblem-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .preloader__title {
@@ -3920,6 +4217,7 @@ a.card:hover {
     letter-spacing: 0.2em;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     letter-spacing: 0.5em;
@@ -3930,19 +4228,24 @@ a.card:hover {
 .preloader__line {
   width: 100px;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-honey) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--color-honey) 50%,
+      transparent 100%);
   transform: scaleX(0);
   animation: preloader-line 0.5s ease-out 1.85s forwards;
 }
 
 @keyframes preloader-line {
-  from { transform: scaleX(0); opacity: 0; }
-  to   { transform: scaleX(1); opacity: 1; }
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 
 .preloader__caption {
@@ -3955,6 +4258,7 @@ a.card:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .preloader,
   .preloader__seal,
   .preloader__title,
@@ -3974,7 +4278,11 @@ a.card:hover {
     width: 7rem;
     height: 7rem;
   }
-  .emblem__letter { font-size: 86px; }
+
+  .emblem__letter {
+    font-size: 86px;
+  }
+
   .preloader__title {
     font-size: 1.25rem;
   }

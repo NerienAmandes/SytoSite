@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { searchProducts, categoryStyle, minPriceOf, formatPrice } from '../data/index.js'
+import { useData } from '../context/DataContext.jsx'
 
 const SUGGEST_LIMIT = 6
 
@@ -14,6 +15,7 @@ const SUGGEST_LIMIT = 6
  * - Esc / клик вне / клик по иконке-крестику → закрывает
  */
 export default function Search() {
+  const { products } = useData()
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)        // выпадашка с подсказками
   const [isExpanded, setIsExpanded] = useState(false) // раскрыто ли поле ввода
@@ -22,7 +24,7 @@ export default function Search() {
   const rootRef = useRef(null)
   const inputRef = useRef(null)
 
-  const suggestions = query.trim() ? searchProducts(query, SUGGEST_LIMIT) : []
+  const suggestions = query.trim() ? searchProducts(query, products, SUGGEST_LIMIT) : []
   const showDropdown = isOpen && isExpanded && query.trim().length > 0
 
   // Закрываем выпадашку по клику вне

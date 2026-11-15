@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Админ-панель · Сыто</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<!-- ====================== Экран входа ====================== -->
+<div id="login-screen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">🐝 Сыто</div>
+    <h1>Вход в админ-панель</h1>
+    <form id="login-form" autocomplete="off">
+      <label>
+        Логин
+        <input type="text" id="login-username" required autocomplete="username" />
+      </label>
+      <label>
+        Пароль
+        <input type="password" id="login-password" required autocomplete="current-password" />
+      </label>
+      <div id="login-error" class="form-error"></div>
+      <button type="submit" class="btn btn-primary btn-block">Войти</button>
+    </form>
+    <p class="login-hint">Логин и пароль задаются в БД (admin_users). По умолчанию: admin / admin123</p>
+  </div>
+</div>
+
+<!-- ====================== Основной интерфейс ====================== -->
+<div id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="sidebar-logo">🐝 Сыто · Админка</div>
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-view="products">📦 Товары</button>
+      <button class="nav-btn" data-view="categories">🗂 Категории</button>
+    </nav>
+    <div class="sidebar-footer">
+      <span id="admin-user"></span>
+      <button id="logout-btn" class="btn btn-ghost btn-sm">Выйти</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <!-- Уведомления -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- ========== ТОВАРЫ ========== -->
+    <section id="view-products" class="view">
+      <div class="view-header">
+        <h2>Товары</h2>
+        <button class="btn btn-primary" id="add-product-btn">+ Добавить товар</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:60px">Фото</th>
+              <th>Название</th>
+              <th>Категория</th>
+              <th style="width:90px">Цена</th>
+              <th style="width:80px">В наличии</th>
+              <th style="width:140px">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="products-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== КАТЕГОРИИ ========== -->
+    <section id="view-categories" class="view hidden">
+      <div class="view-header">
+        <h2>Категории</h2>
+        <button class="btn btn-primary" id="add-category-btn">+ Добавить категорию</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:60px">Фото</th>
+              <th>Название</th>
+              <th>Slug</th>
+              <th style="width:140px">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="categories-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ====================== Модалка товара ====================== -->
+<div id="product-modal" class="modal hidden">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-header">
+      <h3 id="product-modal-title">Новый товар</h3>
+      <button class="modal-close" data-close="product-modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="product-form" class="form-grid">
+        <input type="hidden" id="p-id" />
+
+        <div class="field">
+          <label>Название *</label>
+          <input type="text" id="p-title" required />
+        </div>
+
+        <div class="field">
+          <label>Slug (URL)</label>
+          <input type="text" id="p-slug" placeholder="оставьте пустым — сгенерируется из названия" />
+        </div>
+
+        <div class="field">
+          <label>Категория</label>
+          <select id="p-category" class="input"></select>
+        </div>
+
+        <div class="field">
+          <label>Единица (напр. «0,5 л»)</label>
+          <input type="text" id="p-pricePer" />
+        </div>
+
+        <div class="field field-wide">
+          <label>Краткое описание</label>
+          <textarea id="p-short" rows="2"></textarea>
+        </div>
+
+        <div class="field field-wide">
+          <label>Полное описание</label>
+          <textarea id="p-desc" rows="5"></textarea>
+        </div>
+
+        <div class="field field-wide">
+          <label>Главное изображение</label>
+          <div class="image-field">
+            <div class="image-preview" id="p-image-preview"></div>
+            <div class="image-actions">
+              <input type="text" id="p-image" class="input" placeholder="/images/xxx.webp" />
+              <label class="btn btn-ghost">
+                Загрузить
+                <input type="file" id="p-image-upload" accept="image/*" hidden />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field field-wide">
+          <label>Теги (через запятую)</label>
+          <input type="text" id="p-tags" placeholder="напиток, мёд, травы" />
+        </div>
+
+        <div class="field field-wide">
+          <label>Варианты (фасовки и цены)</label>
+          <div id="p-variants" class="variants"></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="add-variant-btn">+ Добавить вариант</button>
+        </div>
+
+        <div class="field field-wide toggles">
+          <label class="toggle">
+            <input type="checkbox" id="p-available" checked />
+            <span>В наличии</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="p-featured" />
+            <span>Рекомендуемый</span>
+          </label>
+        </div>
+
+        <div class="form-actions field-wide">
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+          <button type="button" class="btn btn-ghost" data-close="product-modal">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ====================== Модалка категории ====================== -->
+<div id="category-modal" class="modal hidden">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 id="category-modal-title">Новая категория</h3>
+      <button class="modal-close" data-close="category-modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="category-form" class="form-grid">
+        <input type="hidden" id="c-id" />
+        <div class="field">
+          <label>Название *</label>
+          <input type="text" id="c-title" required />
+        </div>
+        <div class="field">
+          <label>Slug</label>
+          <input type="text" id="c-slug" placeholder="сгенерируется из названия" />
+        </div>
+        <div class="field field-wide">
+          <label>Описание</label>
+          <textarea id="c-short" rows="3"></textarea>
+        </div>
+        <div class="field field-wide">
+          <label>Изображение</label>
+          <div class="image-field">
+            <div class="image-preview" id="c-image-preview"></div>
+            <div class="image-actions">
+              <input type="text" id="c-image" class="input" placeholder="/images/xxx.webp" />
+              <label class="btn btn-ghost">
+                Загрузить
+                <input type="file" id="c-image-upload" accept="image/*" hidden />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions field-wide">
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+          <button type="button" class="btn btn-ghost" data-close="category-modal">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

@@ -10,14 +10,14 @@
  * Пока файла нет, письма отправляются через mail() хостинга.
  *
  * Домен ящика кириллический, поэтому адрес задан в punycode:
- *   syto@сыто.рус  =  syto@xn--n1afd9a.xn--p1acf
+ *   syto@сыто.su  =  syto@xn--n1afd9a.su
  */
 return array(
     /* Куда присылать заказы */
     'mail_to' => 'dmitriikolistratov@mail.ru',
 
     /* Ящик домена на sweb.ru — отправитель */
-    'smtp_user' => 'syto@xn--n1afd9a.xn--p1acf',
+    'smtp_user' => 'syto@xn--n1afd9a.su',
     'smtp_pass' => 'ПАРОЛЬ_ОТ_ЯЩИКА',
 
     /* Если хотите другой порт/шифрование: 587 + 'tls' вместо 465 + 'ssl' */

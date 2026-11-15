@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
-import { categories, categoryStyle, imageDims } from '../data/index.js'
+import { categoryStyle, imageDims } from '../data/index.js'
+import { useData } from '../context/DataContext.jsx'
 import Divider from '../components/Divider.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
 import useSeo from '../hooks/useSeo.js'
 
 export default function Catalog() {
+  const { categories } = useData()
+
   useSeo({
     title: 'Каталог продукции',
     description:

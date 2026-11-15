@@ -1,19 +1,15 @@
 import { Link } from 'react-router-dom'
 
-import { categoryStyle, categories, products, faq, imageDims } from '../data/index.js'
+import { categoryStyle, imageDims } from '../data/index.js'
+import { useData } from '../context/DataContext.jsx'
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import RequestForm from '../components/RequestForm.jsx'
 import Faq from '../components/Faq.jsx'
 import useSeo from '../hooks/useSeo.js'
 
-/* Хиты продаж подбираются из products.json фильтром по `featured: true`,
-   чтобы витрина собиралась из данных, а не из хардкода. */
-const hits = products.filter((p) => p.featured)
-
 /* На главной показываем первые 3 вопроса, остальные — на /faq */
 const HOME_FAQ_COUNT = 3
-const faqPreview = faq.slice(0, HOME_FAQ_COUNT)
 
 /* ===== Преимущества — контент-слой (можно вынести в CMS/JSON позже) ===== */
 const ADVANTAGES = [
@@ -51,6 +47,12 @@ const SYTO_TEASER = {
 /* ===================================================================== */
 
 export default function Home() {
+  const { products, categories, faq } = useData()
+
+  /* Хиты продаж — товары с featured: true */
+  const hits = products.filter((p) => p.featured)
+  const faqPreview = faq.slice(0, HOME_FAQ_COUNT)
+
   useSeo({
     title: 'ЭКОферма Дмитрия Колистратова — натуральные продукты',
     description:
@@ -63,7 +65,7 @@ export default function Home() {
     <>
       <HeroSection />
       <AboutCompanySection />
-      <CategoriesSection />
+      <CategoriesSection categories={categories} />
       <HitsSection hits={hits} />
       <SytoTeaserSection data={SYTO_TEASER} />
       <AdvantagesSection />
@@ -119,7 +121,7 @@ function AboutCompanySection() {
 
 /* -------------------------- 3. Категории -------------------------- */
 
-function CategoriesSection() {
+function CategoriesSection({ categories }) {
   return (
     <section className="section">
       <div className="container">

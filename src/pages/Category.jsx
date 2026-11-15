@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { products, categories } from '../data/index.js'
+import { useData } from '../context/DataContext.jsx'
 import Card from '../components/Card.jsx'
 import Divider from '../components/Divider.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
@@ -8,6 +8,7 @@ import useSeo from '../hooks/useSeo.js'
 export default function Category() {
   // Достаём slug из адреса: /catalog/napitki → "napitki"
   const { categorySlug } = useParams()
+  const { products, categories } = useData()
 
   const category = categories.find((c) => c.slug === categorySlug)
   const categoryProducts = products.filter((p) => p.category === categorySlug)

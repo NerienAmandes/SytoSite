@@ -1,0 +1,14 @@
+<?php
+/**
+ * Пример файла с доступами к БД.
+ *
+ * 1. Скопируйте в public/db-config.php
+ * 2. Впишите данные из панели sweb.ru (раздел «Базы данных MySQL»)
+ * 3. Файл db-config.php в git не попадает
+ */
+return array(
+    'host' => 'localhost',
+    'name' => 'sytorus_novoe',      // имя БД
+    'user' => 'admin',      // пользователь БД
+    'pass' => 'S1ToNo18OE',
+);

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 
-import { categories } from '../data/index.js'
+import { useData } from '../context/DataContext.jsx'
 import { useCart } from '../context/CartContext.jsx'
 import Search from './Search.jsx'
 
 /**
- * Главное меню. Категории в выпадающем списке берутся из data/index.js —
- * добавил новую категорию в categories.json → она автоматически появится тут.
+ * Главное меню. Категории в выпадающем списке берутся из контекста данных
+ * (загружаются из БД через API).
  *
  * Структура (одна строка):
  *  Логотип · Поиск-иконка · Навигация · Бургер (моб.)
@@ -18,6 +18,7 @@ import Search from './Search.jsx'
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const { count } = useCart()
+  const { categories } = useData()
 
   // Закрываем меню при переходе на новую страницу (мобилка)
   const location = useLocation()
@@ -40,7 +41,9 @@ export default function Header() {
       <div className="container header__main">
         <Link to="/" className="logo" aria-label="Сыто — на главную">
           <span className="logo__mark" aria-hidden="true">С</span>
-          <span className="logo__text">Сыто</span>
+          <span className="logo__text" style={{ fontFamily: 'var(--font-ponomar)' }}>
+            СЫТО
+          </span>
         </Link>
 
         <div className="header__search">

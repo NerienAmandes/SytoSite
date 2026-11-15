@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-import { products, categories, imageDims } from '../data/index.js'
-import { formatPrice } from '../data/index.js'
+import { imageDims, formatPrice } from '../data/index.js'
+import { useData } from '../context/DataContext.jsx'
 import { useCart, nextDiscountHint } from '../context/CartContext.jsx'
 
 import Card from '../components/Card.jsx'
@@ -15,6 +15,7 @@ const RELATED_COUNT = 4
 
 export default function Product() {
   const { slug } = useParams()
+  const { products, categories } = useData()
   const product = products.find((p) => p.slug === slug)
 
   useSeo({

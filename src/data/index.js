@@ -50,7 +50,7 @@ function normalize(s) {
         .replace(/ё/g, 'е')
 }
 
-export function searchProducts(query, limit) {
+export function searchProducts(query, products, limit) {
     const q = normalize(query).trim()
     if (!q) return []
     const matches = products.filter((p) => {
@@ -64,7 +64,7 @@ export function searchProducts(query, limit) {
             .join(' | ')
         return haystack.includes(q)
     })
-    return typeof limit === 'number' ? matches.slice(0, limit) : []
+    return typeof limit === 'number' ? matches.slice(0, limit) : matches
 }
 
 // --- Размеры изображений (для width/height в <img> чтобы не было сдвига макета) ---

@@ -4,7 +4,7 @@
  *
  * Читает:
  *   - src/data/products.json  — массив товаров с полем slug
- *   - SITE_BASE                — базовый URL из .env или дефолт https://syto.ru
+ *   - SITE_BASE                — базовый URL из .env или дефолт https://сыто.su
  *
  * Пишет:
  *   - public/sitemap.xml       — карта сайта в формате XML
@@ -18,7 +18,7 @@ const __dirname = dirname(__filename)
 const root = resolve(__dirname, '..')
 
 /* Базовый URL — из переменной окружения SITE_BASE, иначе дефолт */
-const SITE = (process.env.SITE_BASE || 'https://syto.ru').replace(/\/$/, '')
+const SITE = (process.env.SITE_BASE || 'https://сыто.su').replace(/\/$/, '')
 
 /* Статические маршруты приложения (соответствуют src/App.jsx) */
 const STATIC_ROUTES = [

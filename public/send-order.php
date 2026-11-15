@@ -9,8 +9,8 @@
  * Доступы к ящику хранятся в отдельном файле mail-config.php (он не попадает в git).
  * Файл mail-config.php.example показывает формат.
  *
- * Домен ящика кириллический (сыто.рус), поэтому в настройках адрес задан
- * в punycode: syto@xn--n1afd9a.xn--p1acf. SMTP кириллицу не понимает.
+ * Домен ящика кириллический (сыто.su), поэтому в настройках адрес задан
+ * в punycode: syto@xn--n1afd9a.su. SMTP кириллицу не понимает.
  */
 
 /* ====================== НАСТРОЙКИ ====================== */
@@ -24,15 +24,15 @@ $config = array(
     'smtp_host'     => 'smtp.spaceweb.ru',
     'smtp_port'     => 465,
     'smtp_secure'   => 'ssl', /* ssl (порт 465) | tls (порт 587) | '' (порт 25) */
-    'smtp_user'     => 'syto@xn--n1afd9a.xn--p1acf', /* syto@сыто.рус */
+    'smtp_user'     => 'syto@xn--n1afd9a.su', /* syto@сыто.su */
     'smtp_pass'     => '',
 
     /* Адрес отправителя в письме. Если пусто — берётся smtp_user. */
     'mail_from'     => '',
     'mail_from_name' => 'Сайт Сыто',
 
-    /* Домен сайта: используется в EHLO и Message-ID */
-    'site_domain'   => 'syto.ru',
+    /* Домен сайта: используется в EHLO и Message-ID (ASCII/punycode) */
+    'site_domain'   => 'xn--n1afd9a.su',
 );
 
 /* Локальный файл с доступами к почте (загружается на сервер вручную). */
@@ -46,7 +46,7 @@ if (is_file(__DIR__ . '/mail-config.php')) {
 if ($config['mail_from'] === '') {
     $config['mail_from'] = $config['smtp_user'] !== ''
         ? $config['smtp_user']
-        : 'noreply@syto.ru';
+        : 'noreply@xn--n1afd9a.su';
 }
 
 /* ASCII-версия адреса отправителя — её подставляем в SMTP-заголовки. */
@@ -137,7 +137,7 @@ function respond($code, $payload)
 
 /**
  * Приводит домен в адресе к ASCII (punycode).
- * syto@сыто.рус → syto@xn--n1afd9a.xn--p1acf
+ * syto@сыто.su → syto@xn--n1afd9a.su
  */
 function ascii_email($email)
 {
@@ -167,7 +167,7 @@ function ascii_email($email)
     }
 
     throw new Exception(
-        'не удалось перевести домен "' . $domain . '" в punycode — укажите адрес явно, например syto@xn--n1afd9a.xn--p1acf'
+        'не удалось перевести домен "' . $domain . '" в punycode — укажите адрес явно, например syto@xn--n1afd9a.su'
     );
 }
 
