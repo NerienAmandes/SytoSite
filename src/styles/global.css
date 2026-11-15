@@ -942,6 +942,18 @@ main.container {
   transform: translateY(1px);
 }
 
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:disabled:hover {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-wood);
+}
+
 /* ===== Карточки («купеческая этикетка») ===== */
 .card {
   position: relative;
@@ -2722,6 +2734,18 @@ a.card:hover {
 /* ============================================
    Общая форма заявки (RequestForm)
    ============================================ */
+
+/* Ловушка для ботов — скрытое поле (проверяется на сервере) */
+.form__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .form__required {
   color: var(--color-berry);
   margin-left: 0.15em;

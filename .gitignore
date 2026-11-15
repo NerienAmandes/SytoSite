@@ -9,3 +9,9 @@ npm-debug.log*
 .vercel
 .env
 .env.local
+
+# Доступы к почтовому ящику (загружаются на сервер вручную)
+public/mail-config.php
+
+# Лог отправки заказов
+public/send-order.log

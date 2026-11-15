@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { sendOrder } from '../api/sendOrder.js'
+
 /**
  * Общая форма заявки для сайта.
  * Поля: имя, телефон, комментарий, согласие на обработку персональных данных.
@@ -18,9 +20,12 @@ export default function RequestForm({
     phone: '',
     comment: '',
     consent: false,
+    website: '',
   })
   const [status, setStatus] = useState('idle') // idle | success | error
   const [errors, setErrors] = useState({})
+  const [sending, setSending] = useState(false)
+  const [sendError, setSendError] = useState('')
 
   function handleChange(e) {
     const { name, type, checked, value } = e.target
@@ -30,7 +35,7 @@ export default function RequestForm({
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const newErrors = {}
     if (!form.name.trim()) newErrors.name = 'Укажите имя'
@@ -43,9 +48,28 @@ export default function RequestForm({
       return
     }
 
-    // Без бэкенда: показываем подтверждение. Позже — mailto: / WhatsApp / Formspree.
+    setSending(true)
+    setSendError('')
+
+    const result = await sendOrder({
+      type: 'request',
+      name: form.name.trim(),
+      phone: form.phone.trim(),
+      comment: form.comment.trim(),
+      website: form.website,
+      page: window.location.href,
+    })
+
+    setSending(false)
+
+    if (!result.ok) {
+      setStatus('error')
+      setSendError(result.error)
+      return
+    }
+
     setStatus('success')
-    setForm({ name: '', phone: '', comment: '', consent: false })
+    setForm({ name: '', phone: '', comment: '', consent: false, website: '' })
   }
 
   if (status === 'success') {
@@ -62,6 +86,18 @@ export default function RequestForm({
       onSubmit={handleSubmit}
       noValidate
     >
+      {/* Ловушка для ботов: поле скрыто от людей */}
+      <input
+        className="form__hp"
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        value={form.website}
+        onChange={handleChange}
+        aria-hidden="true"
+      />
+
       <div className="form__field">
         <label className="form__label" htmlFor="req-name">
           Имя <span className="form__required" aria-hidden="true">*</span>
@@ -138,9 +174,15 @@ export default function RequestForm({
         {errors.consent && <span className="form__error">{errors.consent}</span>}
       </div>
 
-      <button type="submit" className="btn form__submit">
-        {submitLabel}
+      <button type="submit" className="btn form__submit" disabled={sending}>
+        {sending ? 'Отправляем…' : submitLabel}
       </button>
+
+      {sendError && (
+        <p className="form__notice form__notice--error">
+          {sendError}. Позвоните нам: +7 (903) 238-70-62
+        </p>
+      )}
 
       {status === 'error' && Object.keys(errors).length === 0 && (
         <p className="form__notice form__notice--error">

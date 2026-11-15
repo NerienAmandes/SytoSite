@@ -1,0 +1,27 @@
+<?php
+/**
+ * Пример файла с доступами к почте.
+ *
+ * 1. Скопируйте этот файл в public/mail-config.php (или создайте новый с таким именем).
+ * 2. Впишите свои данные.
+ * 3. Загрузите mail-config.php на сервер рядом с index.html.
+ *
+ * Сам mail-config.php в git не попадает — см. .gitignore.
+ * Пока файла нет, письма отправляются через mail() хостинга.
+ *
+ * Домен ящика кириллический, поэтому адрес задан в punycode:
+ *   syto@сыто.рус  =  syto@xn--n1afd9a.xn--p1acf
+ */
+return array(
+    /* Куда присылать заказы */
+    'mail_to' => 'dmitriikolistratov@mail.ru',
+
+    /* Ящик домена на sweb.ru — отправитель */
+    'smtp_user' => 'syto@xn--n1afd9a.xn--p1acf',
+    'smtp_pass' => 'ПАРОЛЬ_ОТ_ЯЩИКА',
+
+    /* Если хотите другой порт/шифрование: 587 + 'tls' вместо 465 + 'ssl' */
+    // 'smtp_host'   => 'smtp.spaceweb.ru',
+    // 'smtp_port'   => 465,
+    // 'smtp_secure' => 'ssl',
+);

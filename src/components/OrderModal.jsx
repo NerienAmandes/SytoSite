@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { formatPrice } from '../data/index.js'
+import { sendOrder } from '../api/sendOrder.js'
 
 // Пороги скидок для напитков: количество → процент скидки.
 // Менять тут, если в будущем логика изменится.
@@ -55,9 +56,11 @@ export default function OrderModal({
     unitPrice = 0,
     isNapitok = false,
 }) {
-    const [form, setForm] = useState({ name: '', phone: '' })
+    const [form, setForm] = useState({ name: '', phone: '', website: '' })
     const [quantity, setQuantity] = useState(1)
     const [status, setStatus] = useState('idle') // idle | success | error
+    const [sending, setSending] = useState(false)
+    const [sendError, setSendError] = useState('')
     const firstInputRef = useRef(null)
 
     // Блокируем скролл, фокусируем первый инпут, вешаем Escape
@@ -118,15 +121,44 @@ export default function OrderModal({
         setQuantity(v === '' ? 1 : Math.min(99, Number(v)))
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         if (!form.name.trim() || !form.phone.trim()) {
             setStatus('error')
             return
         }
-        // Без бэкенда: позже можно подключить mailto: / WhatsApp / Formspree
+
+        setSending(true)
+        setSendError('')
+
+        const result = await sendOrder({
+            type: 'order',
+            name: form.name.trim(),
+            phone: form.phone.trim(),
+            website: form.website,
+            page: window.location.href,
+            total,
+            items: [
+                {
+                    title: productTitle,
+                    variant: variantLabel || '',
+                    price: unitPrice,
+                    qty,
+                    total,
+                },
+            ],
+        })
+
+        setSending(false)
+
+        if (!result.ok) {
+            setStatus('error')
+            setSendError(result.error)
+            return
+        }
+
         setStatus('success')
-        setForm({ name: '', phone: '' })
+        setForm({ name: '', phone: '', website: '' })
     }
 
     function handleClose() {
@@ -189,6 +221,18 @@ export default function OrderModal({
                     </div>
                 ) : (
                     <form className="form" onSubmit={handleSubmit} noValidate>
+                        {/* Ловушка для ботов: поле скрыто от людей */}
+                        <input
+                            className="form__hp"
+                            type="text"
+                            name="website"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={form.website}
+                            onChange={handleChange}
+                            aria-hidden="true"
+                        />
+
                         {/* Счётчик количества */}
                         <div className="modal__qty">
                             <span className="modal__qty-label">Количество</span>
@@ -301,13 +345,19 @@ export default function OrderModal({
                             />
                         </div>
 
-                        <button type="submit" className="btn form__submit">
-                            Отправить заявку
+                        <button type="submit" className="btn form__submit" disabled={sending}>
+                            {sending ? 'Отправляем…' : 'Отправить заявку'}
                         </button>
 
-                        {status === 'error' && (
+                        {status === 'error' && !sendError && (
                             <p className="form__notice form__notice--error">
                                 Пожалуйста, заполните оба поля.
+                            </p>
+                        )}
+
+                        {sendError && (
+                            <p className="form__notice form__notice--error">
+                                {sendError}. Позвоните нам: +7 (903) 238-70-62
                             </p>
                         )}
                     </form>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useCart, calcTotals, nextDiscountHint } from '../context/CartContext.jsx'
 import { formatPrice } from '../data/index.js'
+import { sendOrder } from '../api/sendOrder.js'
 
 export default function Cart() {
     const {
@@ -16,9 +17,11 @@ export default function Cart() {
         clearCart,
     } = useCart()
 
-    const [form, setForm] = useState({ name: '', phone: '', comment: '', consent: false })
+    const [form, setForm] = useState({ name: '', phone: '', comment: '', consent: false, website: '' })
     const [status, setStatus] = useState('idle')
     const [errors, setErrors] = useState({})
+    const [sending, setSending] = useState(false)
+    const [sendError, setSendError] = useState('')
 
     function handleChange(e) {
         const { name, type, checked, value } = e.target
@@ -26,7 +29,7 @@ export default function Cart() {
         if (errors[name]) setErrors((prev) => ({ ...prev, [name]: null }))
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         const newErrors = {}
         if (!form.name.trim()) newErrors.name = 'Укажите имя'
@@ -36,6 +39,37 @@ export default function Cart() {
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors)
             setStatus('error')
+            return
+        }
+
+        setSending(true)
+        setSendError('')
+
+        const result = await sendOrder({
+            type: 'order',
+            name: form.name.trim(),
+            phone: form.phone.trim(),
+            comment: form.comment.trim(),
+            website: form.website,
+            page: window.location.href,
+            total: totals.total,
+            items: items.map((item) => {
+                const t = calcTotals(item.unitPrice, item.qty, item.isNapitok)
+                return {
+                    title: item.title,
+                    variant: item.variantLabel || '',
+                    price: item.unitPrice,
+                    qty: t.qty,
+                    total: t.total,
+                }
+            }),
+        })
+
+        setSending(false)
+
+        if (!result.ok) {
+            setStatus('error')
+            setSendError(result.error)
             return
         }
 
@@ -204,6 +238,18 @@ export default function Cart() {
                     </div>
 
                     <form className="form" onSubmit={handleSubmit} noValidate>
+                        {/* Ловушка для ботов: поле скрыто от людей */}
+                        <input
+                            className="form__hp"
+                            type="text"
+                            name="website"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={form.website}
+                            onChange={handleChange}
+                            aria-hidden="true"
+                        />
+
                         <div className="form__field">
                             <label className="form__label" htmlFor="cart-name">
                                 Имя <span className="form__required">*</span>
@@ -267,9 +313,15 @@ export default function Cart() {
                             {errors.consent && <span className="form__error">{errors.consent}</span>}
                         </div>
 
-                        <button type="submit" className="btn form__submit">
-                            Отправить заказ
+                        <button type="submit" className="btn form__submit" disabled={sending}>
+                            {sending ? 'Отправляем…' : 'Отправить заказ'}
                         </button>
+
+                        {sendError && (
+                            <p className="form__notice form__notice--error">
+                                {sendError}. Позвоните нам: +7 (903) 238-70-62
+                            </p>
+                        )}
                     </form>
 
                     <button type="button" className="cart__clear" onClick={clearCart}>

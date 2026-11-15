@@ -45,6 +45,11 @@
   Require all denied
 </FilesMatch>
 
+# Доступы к почте и лог отправки не должны отдаваться наружу
+<FilesMatch "^(mail-config\.php|send-order\.log)$">
+  Require all denied
+</FilesMatch>
+
 # Запретить отдачу исходников Vite (src/, node_modules/)
 RewriteRule ^(src/|node_modules/) - [F,L]
 
