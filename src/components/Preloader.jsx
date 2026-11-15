@@ -86,7 +86,7 @@ export default function Preloader() {
       <div className="preloader__title-wrap">
 
         <img
-          src="../public/images/znak.png"
+          src="/images/znak.png"
           className="preloader__istok--left"
           alt=""
         />
@@ -105,7 +105,7 @@ export default function Preloader() {
         </div>
 
         <img
-          src="../public/images/znak.png"
+          src="/images/znak.png"
           className="preloader__istok--right"
           alt=""
         />
