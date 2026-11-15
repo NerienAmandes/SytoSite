@@ -9,6 +9,11 @@ npm-debug.log*
 .vercel
 .env
 .env.local
+# Конфигурация с секретами
+db.config.php
+.env
+.env.*
+!.env.example
 
 # Доступы к почтовому ящику (загружаются на сервер вручную)
 public/mail-config.php
