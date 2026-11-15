@@ -324,6 +324,48 @@
       ]
     },
     {
+      "slug": "gus-goryachego-kopcheniya",
+      "category": "myasnye-delikatesy",
+      "title": "Гусь горячего копчения",
+      "shortDescription": "Гусь горячего копчения — праздничное блюдо с насыщенным вкусом.",
+      "description": "Гусь медовый, печёный в каменной печи на плодовых дровах,с начинкой из антоновских яблок,для сочности и аромата. Средний вес тушки от 3,5кг до 5,5 кг",
+      "image": "/images/gus.webp",
+      "available": true,
+      "tags": [
+        "птица",
+        "гусь",
+        "горячее копчение"
+      ],
+      "pricePer": "1 кг",
+      "variants": [
+        {
+          "label": " 1 кг",
+          "price": 2500
+        }
+      ]
+    },
+    {
+      "slug": "kuritsa-goryachego-kopcheniya",
+      "category": "myasnye-delikatesy",
+      "title": "Курица горячего копчения",
+      "shortDescription": "Ароматная нежная курица горячего копчения.",
+      "description": "Курочка печёная на плодово- ольховых дровах.Маринованная в медово -пряном тузлуке.\n\nКурочку можно подавать как готовое блюдо,предварительно разогрев её в микроволновке или духовке.Так же можно добавлять курочку в салаты. Средний вес 1 тушки 1,5кг",
+      "image": "/images/kyrochka.webp",
+      "available": true,
+      "tags": [
+        "птица",
+        "курица",
+        "горячее копчение"
+      ],
+      "pricePer": "1 кг",
+      "variants": [
+        {
+          "label": "1 кг",
+          "price": 850
+        }
+      ]
+    },
+    {
       "slug": "indeyka-pecheno-kopchenaya-bedro",
       "category": "myasnye-delikatesy",
       "title": "Индейка печено-копчёная (бедро)",
