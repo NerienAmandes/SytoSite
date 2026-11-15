@@ -1315,6 +1315,15 @@ a.card:hover {
   font-size: 0.9rem;
 }
 
+.product__description p {
+  text-indent: 1.5em;
+  margin: 0 0 1em;
+}
+
+.product__description p:first-child {
+  text-indent: 0;
+}
+
 /* ============================================
    Карточка категории (category-card)
    ============================================ */
